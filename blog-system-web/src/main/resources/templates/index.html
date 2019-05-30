@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="keywords" lang="zh" content="Java,图数据库,个人博客,技术博客,博客系统,markdown博客"/>
+    <meta name="keywords" lang="en" content="Java,Graph database,Neo4j,IT Blog,Blog System based on Markdown"/>
+    <meta name="description" lang="zh" content="基于Commommark,Prism.js和Spring boot实现的个人技术博客,支持直接markdown编写博客,并通过git提交给后台,由Commonmark-java后台渲染为静态HTML文件"/>
+    <meta name="description" lang="zh" content="杨承铸的个人技术博客,主要涵盖Java后台开发和图数据库开发相关内容"/>
+    <meta name="title" lang="zh" content="杨承铸的个人博客"/>
+    <title>杨承铸的个人博客</title>
+
+    <style type="text/css">
+
+
+        .blog-keywords{
+            background-color: #bbbbbb;
+        }
+
+        span{
+            color: orangered;
+            margin-left: 5px;
+            margin-right: 5px;
+            background-color: lightgrey;
+        }
+
+        .navbar-fixed-top {
+            position: fixed;
+            top: 0px;
+            height: 80px;
+            width: 100%;
+            border: 1px;
+            border-bottom-width: 2px;
+
+        }
+
+        .nav-container {
+            float:left;
+            height: 100px;
+
+        }
+
+        .content-container {
+            display: block;
+            margin-top: 100px;
+
+        }
+
+        #menu-container {
+            margin-left: 10%;
+            display: table;
+        }
+
+        .nav-menu {
+            vertical-align: middle;
+            text-align: center;
+            display: table-cell;
+            list-style: none;
+
+        }
+
+
+        .nav-menu .menu-item {
+            float:left;
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+
+        .logo {
+            height:100px;
+            width: 240px;
+        }
+
+
+        #search-box-container {
+            display: table;
+            margin-right: 10%;
+        }
+
+        .search-box {
+            height: 40px;
+            vertical-align: middle;
+            text-align: center;
+            display: table-cell;
+            border:1px solid #ee9900;
+        }
+
+        .search-input {
+            border: none;
+            width: 200px;
+            float: left;
+            display: inline;
+            height: 40px;
+            line-height: 40px \9;
+            padding: 0 8px;
+
+        }
+        .search-button {
+            border: none;
+            height: 40px;
+            width: 40px;
+            background: url(../images/search.png) left center no-repeat;
+            float: right;
+            display: inline;
+            margin-right: 10px;
+        }
+
+
+        .content-container {
+            float: left;
+        }
+
+        div .left {
+            width: 15%;
+            margin-right: 10px;
+        }
+
+
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="nav-container">
+        <a  href="/"><img class="logo" src="/images/code-tech.png" alt="code-tech.logo"></a>
+    </div>
+    <div class="nav-container" id="menu-container">
+        <ul class="nav-menu">
+            <li class="menu-item"><a>随笔</a></li>
+            <li class="menu-item"><a>翻译</a></li>
+            <li class="menu-item"><a>GitHub</a></li>
+            <li class="menu-item"><a>Resume</a></li>
+        </ul>
+    </div>
+    <div class="nav-container" id="search-box-container">
+        <div class="search-box" >
+            <input type="text" class="search-input" placeholder="请输入检索词"/>
+            <input type="button" class="search-button" >
+        </div>
+    </div>
+</nav>
+
+<br>
+    <div>
+        <div class="left content-container">left</div>
+        <div class="middle content-container">
+            <ol class="blog-list">
+                <li th:each="blog:${blogs}">
+                    <div th:class="blog-item">
+                        <p th:class="blog-title"><a th:href="${blog.url}" th:text="${blog.title}"></a></p>
+                        <p class="blog-keywords"></p><span th:each="keyword : ${blog.keywords}" th:text="${keyword}" ></span>
+                    </div>
+                </li>
+            </ol>
+        </div>
+        <div class="right content-container" >right</div>
+
+    </div>
+
+    <footer></footer>
+</body>
+</html>

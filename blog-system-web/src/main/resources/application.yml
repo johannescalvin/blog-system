@@ -1,0 +1,5 @@
+ blog.git.base: "/home/calvin/data/markdown-blog/"
+ markdown-file-base: "/home/calvin/data/markdown-blog/"
+ server:
+   port: 8080
+

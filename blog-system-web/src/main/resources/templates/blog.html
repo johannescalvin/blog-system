@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <!-- blog metadata for seo-->
+    <th:block th:each="metadata : ${metadatas}">
+        <meta th:if="${metadata != null}" th:name="${metadata.getType()}" th:lang="${metadata.getSymbol()}" th:content="${metadata.getText()}" >
+    </th:block>
+
+
+
+    <link href="/themes/style.css" rel="stylesheet" />
+    <link href="/themes/prism.css" rel="stylesheet" />
+    <script src="/js/prism.js"></script>
+
+    <script th:if="${languages.contains('latex')}" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
+
+    <script th:if="${languages.contains('seq') || languages.contains('sequence')}" src="https://bramp.github.io/js-sequence-diagrams/js/webfont.js"></script>
+    <script th:if="${languages.contains('seq') || languages.contains('sequence')}" src="https://bramp.github.io/js-sequence-diagrams/js/snap.svg-min.js"></script>
+    <script th:if="${languages.contains('seq') || languages.contains('sequence')}" src="https://bramp.github.io/js-sequence-diagrams/js/underscore-min.js"></script>
+    <script th:if="${languages.contains('seq') || languages.contains('sequence')}" src="https://bramp.github.io/js-sequence-diagrams/js/sequence-diagram-min.js"></script>
+
+    </div>
+    <script>
+        $(document).ready(function(e) {
+            $(".catalog li").click(function(e) {
+                $(this).children(".catalog").toggle();
+                e.stopPropagation(); //阻止冒泡事件
+            });
+        });
+    </script>
+
+
+    <script>
+        $(function(){
+            //当滚动条的位置处于距顶部100像素以下时，跳转链接出现，否则消失
+            $(function () {
+                $(window).scroll(function(){
+                    if ($(window).scrollTop()>100){
+                        $("#back-to-top").fadeIn(1500);
+                    }
+                    else
+                    {
+                        $("#back-to-top").fadeOut(1500);
+                    }
+                });
+
+                //当点击跳转链接后，回到页面顶部位置
+                $("#back-to-top").click(function(){
+                    if ($('html').scrollTop()) {
+                        $('html').animate({ scrollTop: 0 }, 100);//动画效果
+                        return false;
+                    }
+                    $('body').animate({ scrollTop: 0 }, 100);
+                    return false;
+                });
+            });
+        });
+    </script>
+
+    <!-- latext formual display support -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/katex.css" integrity="sha384-b/NoaeRXkMxyKcrDw2KtVtYKkVg3dA0rTRgLoV7W2df3MzeR1eHLTi+l4//4fMwk" crossorigin="anonymous">
+
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/katex.js" integrity="sha384-ern5NCRqs6nJ/a4Ik0nB9hnKVH5HwV2XRUYdQl09OB/vvd1Lmmqbg1Mh+mYUclXx" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+<p id="back-to-top"><a href="#top">返回顶部</a></p>
+
+<div class="catalog" th:utext="${calalog}"></div>
+
+<div th:utext="${blogContent}"></div>
+
+<script th:if="${languages.contains('seq')  || languages.contains('sequence')}" type="text/javascript">
+    $(document).ready(function(){
+
+        var toolbars = document.getElementsByClassName("code-toolbar");
+        for (i=0; i<toolbars.length; i++){
+            var toolbar = toolbars[i];
+            var code = toolbar.querySelector("code");
+            if (code.getAttribute("class") == " language-seq"
+                || code.getAttribute("class") == " language-sequence"){
+
+                var div = document.createElement("div");
+                div.setAttribute("id","seq-diagram"+i);
+                toolbar.appendChild(div);
+
+                var text = code.textContent;
+                var d = Diagram.parse(text);
+                var options = {theme: 'simple'};
+                d.drawSVG('seq-diagram'+i, options);
+            }
+
+        }
+
+    });
+</script>
+
+<script th:if="${languages.contains('latex')}">
+    $(document).ready(function () {
+        var toolbars = document.getElementsByClassName("code-toolbar");
+        for (i=0; i<toolbars.length; i++){
+            var toolbar = toolbars[i];
+            var code = toolbar.querySelector("code");
+            if (code.getAttribute("class") == " language-latex"){
+                var text = code.textContent;
+                var div = document.createElement("div");
+                div.setAttribute("id","latex-diagram"+i);
+                div.textContent = "latex-testing!";
+                toolbar.appendChild(div);
+
+                katex = window.katex;
+
+                katex.render(text,div,{
+                    throwOnError: false
+                });
+            }
+        }
+
+    });
+</script>
+
+<script th:if="${languages.contains('mermaid')}" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.js"></script>
+<script th:if="${languages.contains('mermaid')}">
+    $(document).ready(function () {
+        var toolbars = document.getElementsByClassName("code-toolbar");
+        for (i=0; i<toolbars.length; i++){
+            var toolbar = toolbars[i];
+            var code = toolbar.querySelector("code");
+            if (code.getAttribute("class") == " language-mermaid"){
+                var text = code.textContent;
+                var div = document.createElement("div");
+                div.setAttribute("id","mermaid-diagram"+i);
+                div.setAttribute("class","mermaid");
+                div.textContent = text;
+                toolbar.appendChild(div);
+            }
+        }
+
+        mermaid.initialize({startOnLoad:true});
+    });
+</script>
+
+</body>
+</html>
