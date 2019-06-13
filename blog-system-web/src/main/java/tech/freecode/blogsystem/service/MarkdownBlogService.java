@@ -1,11 +1,11 @@
 package tech.freecode.blogsystem.service;
 
-import org.atlassian.commonmark.ext.catalog.CatalogGenerator;
-import org.atlassian.commonmark.ext.catalog.HeadingIdExtension;
-import org.atlassian.commonmark.ext.catalog.internal.CatalogGeneratorImpl;
-import org.atlassian.commonmark.ext.comment.CommentExtension;
-import org.atlassian.commonmark.ext.comment.MetadataRenderer;
-import org.atlassian.commonmark.ext.comment.internal.MetadataRendereImpl;
+import tech.freecode.commonmark.ext.catalog.CatalogGenerator;
+import tech.freecode.commonmark.ext.catalog.HeadingIdExtension;
+import tech.freecode.commonmark.ext.catalog.internal.CatalogGeneratorImpl;
+import tech.freecode.commonmark.ext.comment.CommentExtension;
+import tech.freecode.commonmark.ext.comment.MetadataRenderer;
+import tech.freecode.commonmark.ext.comment.internal.MetadataRendereImpl;
 import org.commonmark.Extension;
 import org.commonmark.ext.autolink.AutolinkExtension;
 import org.commonmark.ext.gfm.strikethrough.StrikethroughExtension;

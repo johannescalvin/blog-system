@@ -1,9 +1,9 @@
 package tech.freecode.blogsystem.controller;
 
 
-import org.atlassian.commonmark.ext.comment.CommentNode;
-import org.atlassian.commonmark.ext.comment.MetadataUtils;
-import org.atlassian.commonmark.ext.languages.LanguageVisitor;
+import tech.freecode.commonmark.ext.comment.CommentNode;
+import tech.freecode.commonmark.ext.comment.MetadataUtils;
+import tech.freecode.commonmark.ext.languages.LanguageVisitor;
 import org.commonmark.node.Node;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;

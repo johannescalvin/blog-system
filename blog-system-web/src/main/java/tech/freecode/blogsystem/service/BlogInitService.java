@@ -1,7 +1,7 @@
 package tech.freecode.blogsystem.service;
 
-import org.atlassian.commonmark.ext.comment.CommentExtension;
-import org.atlassian.commonmark.ext.comment.CommentNode;
+import tech.freecode.commonmark.ext.comment.CommentExtension;
+import tech.freecode.commonmark.ext.comment.CommentNode;
 import org.commonmark.Extension;
 import org.commonmark.ext.autolink.AutolinkExtension;
 import org.commonmark.ext.gfm.strikethrough.StrikethroughExtension;

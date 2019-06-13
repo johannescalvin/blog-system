@@ -1,6 +1,6 @@
 package tech.freecode.blogsystem;
 
-import org.atlassian.commonmark.ext.comment.MetadataUtils;
+import tech.freecode.commonmark.ext.comment.MetadataUtils;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
