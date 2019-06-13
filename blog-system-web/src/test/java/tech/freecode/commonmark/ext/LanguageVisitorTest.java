@@ -1,12 +1,16 @@
-package tech.freecode.commonmark.ext.languages;
+package tech.freecode.commonmark.ext;
 
-import org.commonmark.node.*;
+import org.commonmark.node.Node;
 import org.commonmark.parser.Parser;
+import tech.freecode.commonmark.ext.languages.LanguageVisitor;
 
-public class LanguagesUtils  {
+import java.util.*;
+import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+public class LanguageVisitorTest {
 
-
-    public static void main(String[] args) {
+    @Test
+    public void testLanguages(){
         String markdown = "# seq\n" +
                 "\n" +
                 "```seq\n" +
@@ -24,7 +28,11 @@ public class LanguagesUtils  {
         LanguageVisitor languageVisitor = new LanguageVisitor();
         Node document = parser.parse(markdown);
         document.accept(languageVisitor);
+        Set<String> languages = languageVisitor.getLanguages();
+        Set<String> expected = new HashSet<>(Arrays.asList("seq","java","bash"));
 
-        System.out.println(languageVisitor.getLanguages());
+        assertEquals(expected,languages);
+
+
     }
 }
