@@ -46,7 +46,7 @@ public class LinkVisitorTest {
         String markdown = "# autolink\n\n" +
                 "http://www.baidu.com\n";
         Node document = parser.parse(markdown);
-        
+
         LinkVisitor visitor = new LinkVisitor();
         document.accept(visitor);
 

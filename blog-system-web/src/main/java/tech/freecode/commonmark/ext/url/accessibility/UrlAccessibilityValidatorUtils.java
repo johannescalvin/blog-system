@@ -1,5 +1,7 @@
 package tech.freecode.commonmark.ext.url.accessibility;
 
+import org.commonmark.Extension;
+import org.commonmark.ext.autolink.AutolinkExtension;
 import org.commonmark.node.Image;
 import org.commonmark.node.Link;
 import org.commonmark.node.Node;
@@ -42,7 +44,10 @@ public class UrlAccessibilityValidatorUtils  {
     public List<UrlAccessibilityValidator.ValidationResult> validate(String markdown){
         ArrayList<UrlAccessibilityValidator.ValidationResult> validationResults = new ArrayList<>();
 
-        Parser parser = Parser.builder().build();
+        List<Extension> extensions = new ArrayList<>();
+        extensions.add(AutolinkExtension.create());
+
+        Parser parser = Parser.builder().extensions(extensions).build();
         Node document = parser.parse(markdown);
 
         validationResults.addAll(validateImages(document));
