@@ -58,7 +58,7 @@ public class UrlUtils {
 
     public static Url wellform(Url link){
         String dest = link.getDestination().trim().toLowerCase();
-        if (!dest.startsWith("https://") || !dest.startsWith("http://")){
+        if (!dest.startsWith("https://") && !dest.startsWith("http://")){
             dest = "http://" + dest;
             return new Url(dest,link.getTitle());
         }

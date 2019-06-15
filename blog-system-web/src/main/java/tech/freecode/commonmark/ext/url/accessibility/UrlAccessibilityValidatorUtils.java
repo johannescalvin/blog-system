@@ -12,7 +12,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UrlAccessibilityValidatorUtils  {
-    
+    private String filebase;
+
+    public void setFilebase(String filebase) {
+        this.filebase = filebase;
+    }
+
     public List<UrlAccessibilityValidator.ValidationResult> validate(File file){
         ArrayList<UrlAccessibilityValidator.ValidationResult> validationResults = new ArrayList<>();
 
@@ -47,7 +52,7 @@ public class UrlAccessibilityValidatorUtils  {
     }
 
     private List<UrlAccessibilityValidator.ValidationResult> validateImages(Node document){
-        UrlAccessibilityValidator validator = new UrlAccessValidatorImpl("");
+        UrlAccessibilityValidator validator = new UrlAccessValidatorImpl(filebase);
 
         ImageVisitor imageVisitor = new ImageVisitor();
         document.accept(imageVisitor);
@@ -65,7 +70,7 @@ public class UrlAccessibilityValidatorUtils  {
     }
 
     private List<UrlAccessibilityValidator.ValidationResult> validateLinks(Node document){
-        UrlAccessibilityValidator validator = new UrlAccessValidatorImpl("");
+        UrlAccessibilityValidator validator = new UrlAccessValidatorImpl(filebase);
 
         LinkVisitor linkVisitor = new LinkVisitor();
         document.accept(linkVisitor);
