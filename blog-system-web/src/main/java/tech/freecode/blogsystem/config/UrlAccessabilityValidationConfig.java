@@ -38,8 +38,7 @@ public class UrlAccessabilityValidationConfig {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         System.out.println(dateFormat.format(new Date()));
 
-        UrlAccessibilityValidatorUtils validatorUtils = new UrlAccessibilityValidatorUtils();
-        validatorUtils.setFilebase(fileBase);
+        UrlAccessibilityValidatorUtils validatorUtils = new UrlAccessibilityValidatorUtils(fileBase);
 
 
         List<File> files = listFiles(new File(fileBase));

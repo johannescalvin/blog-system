@@ -58,6 +58,12 @@
             <version>${commommark.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>tech.freecode</groupId>
+            <artifactId>link-acessability-validator</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
         <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -112,6 +118,22 @@
 
         </plugins>
     </build>
+
+    <!--定义snapshots库和releases库的nexus地址-->
+    <distributionManagement>
+        <repository>
+            <id>releases</id>
+            <url>
+                http://nexus.freecode.tech/repository/maven-releases/
+            </url>
+        </repository>
+        <snapshotRepository>
+            <id>snapshots</id>
+            <url>
+                http://nexus.freecode.tech/repository/maven-snapshots/
+            </url>
+        </snapshotRepository>
+    </distributionManagement>
 
 
 </project>
