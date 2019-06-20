@@ -1,3 +1,4 @@
 **/.idea/
 **/*.iml
 **/target/
+blog-system-web/src/main/resources/application-production.yaml

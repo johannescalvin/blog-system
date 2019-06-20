@@ -22,29 +22,25 @@ public class UrlAccessabilityValidationConfig {
     @Value("${markdown-file-base}")
     private String fileBase;
 
-    @Scheduled(fixedRate = 1000 * 30 )
-//    @Profile("develop")
+    @Scheduled(fixedRate = 1000 * 60  )
+    @Profile("develop")
     public void doTask(){
         task();
     }
 
-//    @Scheduled(fixedRate = 1000 * 60 * 60 * 24 )
-//    @Profile("product")
-//    public void doTask2(){
-//        task();
-//    }
+    @Scheduled(fixedRate = 1000 * 60 * 60 * 24 )
+    @Profile("production")
+    public void doTask2(){
+        task();
+    }
 
     private void task(){
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        System.out.println(dateFormat.format(new Date()));
-
-        UrlAccessibilityValidatorUtils validatorUtils = new UrlAccessibilityValidatorUtils(fileBase);
-
-
+        System.out.println(dateFormat.format(new Date()) +" start link accessibility validation in markdown files ");
         List<File> files = listFiles(new File(fileBase));
         List<UrlAccessibilityValidator.ValidationResult> results = new ArrayList<>();
         for (File markdownFile : files){
-            results.addAll(validatorUtils.validate(markdownFile));
+            results.addAll(UrlAccessibilityValidatorUtils.validate(markdownFile));
         }
 
         for (UrlAccessibilityValidator.ValidationResult result : results){
@@ -52,7 +48,8 @@ public class UrlAccessabilityValidationConfig {
                 System.out.println(result.getMsg());
             }
         }
-        System.out.println(results.size());
+
+        System.out.println(dateFormat.format(new Date()) +" end link accessibility validation in markdown files ");
     }
 
     public List<File> listFiles(File file){

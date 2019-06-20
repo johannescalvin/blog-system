@@ -1,5 +1,13 @@
- blog.git.base: "/home/calvin/data/markdown-blog/"
- markdown-file-base: "/home/calvin/data/markdown-blog/"
- server:
+spring:
+   profiles:
+      active: develop
+
+---
+spring:
+   profiles: develop
+blog.git.base: "/home/calvin/data/markdown-blog/"
+markdown-file-base: "/home/calvin/data/markdown-blog/"
+server:
    port: 8080
+
 
