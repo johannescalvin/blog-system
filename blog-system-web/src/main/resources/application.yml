@@ -5,9 +5,11 @@ spring:
 ---
 spring:
    profiles: develop
-blog.git.base: "/home/calvin/data/markdown-blog/"
-markdown-file-base: "/home/calvin/data/markdown-blog/"
+blog.git.base: "/home/calvin/data/markdown-blog/blog/"
+markdown-file-base: "/home/calvin/data/markdown-blog/blog/"
+seo:
+   site-map:
+      store-dir: /home/calvin/blog-site-map/
 server:
    port: 8080
-
 

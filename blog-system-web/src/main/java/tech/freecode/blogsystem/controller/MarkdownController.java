@@ -34,7 +34,7 @@ public class MarkdownController {
     private MetadataUtils metadataUtils ;
 
 
-    @GetMapping("/blog/**/*.html")
+    @GetMapping("/**/*.html")
     public String getBlog(HttpServletRequest request, Model model){
         String path = request.getRequestURI();
         try {
@@ -62,20 +62,7 @@ public class MarkdownController {
         return "blog";
     }
 
-
-    @GetMapping("/test/**.html")
-    @ResponseBody
-    public String getHtml(HttpServletRequest request, HttpServletResponse response) {
-        return "html";
-    }
-
-    @GetMapping("/test/**.png")
-    @ResponseBody
-    public String getPng(HttpServletRequest request, HttpServletResponse response) {
-        return "png";
-    }
-
-    @PutMapping("/yangchengzhu/**.html")
+    @PutMapping("/**/*.md")
     public void update(HttpServletRequest request) {
         String path = request.getRequestURI().substring(1);
         blogInitService.updateBlog(path);

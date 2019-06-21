@@ -99,7 +99,7 @@
 //
 //
 //}
-package tech.freecode.blogsystem.config;
+package tech.freecode.blogsystem.config.scheduled;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -107,6 +107,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import tech.freecode.blogsystem.service.LinkAccessibilityService;
+import tech.freecode.blogsystem.utils.FileUtils;
 import tech.freecode.commonmark.ext.url.accessibility.UrlAccessibilityValidator;
 import tech.freecode.commonmark.ext.url.accessibility.UrlAccessibilityValidatorUtils;
 
@@ -120,7 +121,7 @@ import java.util.stream.Collectors;
 
 @Configuration
 @EnableScheduling
-public class UrlAccessabilityValidationConfig {
+public class UrlAccessabilityValidationTask {
 
 
     @Value("${markdown-file-base}")
@@ -147,7 +148,7 @@ public class UrlAccessabilityValidationConfig {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         System.out.println(dateFormat.format(new Date()) +" start link accessibility validation in markdown files ");
 
-        List<File> files = listFiles(new File(fileBase));
+        List<File> files = FileUtils.listFiles(new File(fileBase),".md");
         List<UrlAccessibilityValidator.ValidationResult> results = new ArrayList<>();
         for (File markdownFile : files){
             List<UrlAccessibilityValidator.ValidationResult> validationResults = UrlAccessibilityValidatorUtils.validate(markdownFile);
@@ -183,22 +184,5 @@ public class UrlAccessabilityValidationConfig {
 
         System.out.println(dateFormat.format(new Date()) +" end link accessibility validation in markdown files ");
     }
-
-    public List<File> listFiles(File file){
-        ArrayList<File> list = new ArrayList<>();
-        if (file.isDirectory()){
-            File[] files = file.listFiles();
-            for (File f : files){
-                list.addAll(listFiles(f));
-            }
-        }else if (file.getName().endsWith(".md")){
-            list.add(file);
-        }
-
-        return list;
-    }
-
-
-
 
 }

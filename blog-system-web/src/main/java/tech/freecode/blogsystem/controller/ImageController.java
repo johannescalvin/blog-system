@@ -14,7 +14,7 @@ public class ImageController {
     @Value("${markdown-file-base:}")
     private String basePath;
 
-    @GetMapping("/blog/**/*.svg")
+    @GetMapping("/**/*.svg")
     public void getSVG(HttpServletRequest request, HttpServletResponse response) {
         String path = request.getRequestURI();
         try {

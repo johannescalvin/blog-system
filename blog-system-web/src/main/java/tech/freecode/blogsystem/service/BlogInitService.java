@@ -180,7 +180,11 @@ public class BlogInitService {
             return;
         }
 
-        String filePath = fileBase + "/" + markdownFilename;
+        if (!fileBase.endsWith("/")){
+            fileBase += "/";
+        }
+
+        String filePath = fileBase  + markdownFilename;
         File file = new File(filePath);
         if (!file.exists()){
             tryRomoveBlogFromCache(Caches.blogs,markdownFilename);

@@ -97,6 +97,14 @@
             <version>2.0.0.RELEASE</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/com.github.dfabulich/sitemapgen4j -->
+        <dependency>
+            <groupId>com.github.dfabulich</groupId>
+            <artifactId>sitemapgen4j</artifactId>
+            <version>1.1.2</version>
+        </dependency>
+
+
     </dependencies>
     <build>
         <plugins>

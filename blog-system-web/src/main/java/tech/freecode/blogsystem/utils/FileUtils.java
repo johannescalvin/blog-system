@@ -147,4 +147,18 @@ public class FileUtils {
             return set;
         }
     }
+
+    public static List<File> listFiles(File file,String suffix){
+        ArrayList<File> list = new ArrayList<>();
+        if (file.isDirectory()){
+            File[] files = file.listFiles();
+            for (File f : files){
+                list.addAll(listFiles(f,suffix));
+            }
+        }else if (file.getName().endsWith(suffix)){
+            list.add(file);
+        }
+
+        return list;
+    }
 }
