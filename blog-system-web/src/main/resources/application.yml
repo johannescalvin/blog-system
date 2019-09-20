@@ -5,11 +5,38 @@ spring:
 ---
 spring:
    profiles: develop
+   data:
+     elasticsearch:
+       cluster-name: elasticsearch
+       cluster-nodes: 127.0.0.1:9300
+       properties:
+         path:
+           logs: ./elasticsearch/log
+           data: ./elasticsearch/data
+
 blog.git.base: "/home/calvin/data/markdown-blog/blog/"
 markdown-file-base: "/home/calvin/data/markdown-blog/blog/"
+
+blog-system:
+  link-accessibility-validator:
+    enabled: false
 seo:
    site-map:
       store-dir: /home/calvin/blog-site-map/
 server:
    port: 8080
+
+index-page:
+   seo-keywords-zh: "Java,图数据库,个人博客,技术博客,博客系统,markdown博客"
+   seo-keywords-en: "Java,Graph database,Neo4j,IT Blog,Blog System based on Markdown"
+   seo-descriptions:
+      - "基于Commommark,Prism.js和Spring boot实现的个人技术博客,支持直接markdown编写博客,并通过git提交给后台,由Commonmark-java后台渲染为静态HTML文件"
+      - "杨承铸的个人技术博客,主要涵盖Java后台开发和图数据库开发相关内容"
+      - "A personnal markdown-based blog system, using commonmark to parse and render and git to write blog locally, then deploy it to website automatically.  "
+   display-title: "代码驿站 | 杨承铸的个人博客"
+   record-code: "| 鄂ICP备19008810号 |"
+   contact: "邮箱: johannescalvin@163.com"
+
+
+
 

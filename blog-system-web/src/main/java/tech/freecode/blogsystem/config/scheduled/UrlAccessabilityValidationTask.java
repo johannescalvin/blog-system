@@ -102,6 +102,7 @@
 package tech.freecode.blogsystem.config.scheduled;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -121,8 +122,8 @@ import java.util.stream.Collectors;
 
 @Configuration
 @EnableScheduling
+@ConditionalOnProperty(name = "blog-system.link-accessibility-validator.enabled",havingValue = "true")
 public class UrlAccessabilityValidationTask {
-
 
     @Value("${markdown-file-base}")
     private String fileBase;
