@@ -1,4 +1,4 @@
-package tech.freecode.commonmark.ext.languages;
+package tech.freecode.commonmark.ext.visitors;
 
 import org.commonmark.node.AbstractVisitor;
 import org.commonmark.node.FencedCodeBlock;
