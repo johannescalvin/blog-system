@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import tech.freecode.blogsystem.utils.FileUtils;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,23 +31,10 @@ public class MarkdownBlogService {
     @Value("${markdown-file-base:}")
     private String basePath ;
 
-    List<Extension> extensions = new ArrayList<Extension>();
+    @Resource
     private Parser parser;
-
-    @PostConstruct
-    public void init() {
-
-        extensions.add(StrikethroughExtension.create());
-        extensions.add(TablesExtension.create());
-        extensions.add(AutolinkExtension.create());
-        extensions.add(InsExtension.create());
-        extensions.add(HeadingIdExtension.create());
-
-        extensions.add(CommentExtension.create());
-
-        parser = Parser.builder().extensions(extensions).build();
-    }
-
+    @Resource
+    private HtmlRenderer htmlRenderer;
 
     public Node parseMarkdown(String path)  {
         String fileName = path.substring(0,path.lastIndexOf(".html"));
@@ -64,9 +52,7 @@ public class MarkdownBlogService {
 
 
     public String generateBlogHtml(Node document ){
-        HtmlRenderer renderer = HtmlRenderer.builder().extensions(extensions).build();
-
-        String html = renderer.render(document);
+        String html = htmlRenderer.render(document);
 
         return html;
     }
