@@ -1,9 +1,10 @@
 package tech.freecode.blogsystem.controller;
 
 
+import tech.freecode.blogsystem.service.VisitedTimeService;
 import tech.freecode.commonmark.ext.comment.CommentNode;
 import tech.freecode.commonmark.ext.comment.MetadataUtils;
-import tech.freecode.commonmark.ext.languages.LanguageVisitor;
+import tech.freecode.commonmark.ext.visitors.LanguageVisitor;
 import org.commonmark.node.Node;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -13,7 +14,6 @@ import tech.freecode.blogsystem.service.BlogInitService;
 import tech.freecode.blogsystem.service.MarkdownBlogService;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URLDecoder;
 import java.util.List;
@@ -33,6 +33,8 @@ public class MarkdownController {
     @Resource
     private MetadataUtils metadataUtils ;
 
+    @Resource
+    private VisitedTimeService visitedTimeService;
 
     @GetMapping("/**/*.html")
     public String getBlog(HttpServletRequest request, Model model){
@@ -58,6 +60,10 @@ public class MarkdownController {
 
         List<CommentNode> metadatas = metadataUtils.getCommentNodes(document);
         model.addAttribute("metadatas",metadatas);
+
+        String docId = path.substring(0,path.toLowerCase().lastIndexOf(".html"));
+        long visitedTimes = visitedTimeService.getVisitedTimes(docId);
+        model.addAttribute("visitedTimes",visitedTimes);
 
         return "blog";
     }

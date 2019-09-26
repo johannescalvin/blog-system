@@ -109,7 +109,7 @@ public class BlogExtractorService {
         String link = markdownFilepath.substring(fileBase.length(),markdownFilepath.toLowerCase().lastIndexOf(".md"));
         String id = link;
         document.setId(id);
-        
+
         link += ".html";
         document.setLink(link);
 
