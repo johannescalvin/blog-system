@@ -1,12 +1,12 @@
 package tech.freecode.blogsystem.service;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import tech.freecode.commonmark.ext.comment.CommentExtension;
 import tech.freecode.commonmark.ext.comment.CommentNode;
 import org.commonmark.Extension;
 import org.commonmark.ext.autolink.AutolinkExtension;
 import org.commonmark.ext.gfm.strikethrough.StrikethroughExtension;
 import org.commonmark.ext.gfm.tables.TablesExtension;
-import org.commonmark.ext.heading.anchor.HeadingAnchorExtension;
 import org.commonmark.ext.ins.InsExtension;
 import org.commonmark.node.CustomBlock;
 import org.commonmark.node.Node;
@@ -17,6 +17,7 @@ import tech.freecode.blogsystem.domain.Blog;
 import tech.freecode.blogsystem.utils.FileUtils;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -24,22 +25,16 @@ import java.util.*;
 import java.util.regex.Pattern;
 
 @Service
+@ConditionalOnClass(tech.freecode.blogsystem.service.ElasticsearchBlogSystemInitService.class)
 public class BlogInitService {
-    @Value("${blog.git.base}")
+    @Value("${blog-system.markdown-file-base}")
     private String fileBase ;
+
+    @Resource
+    private Parser parser;
 
     @PostConstruct
     public void init(){
-        List<Extension> extensions = new ArrayList<Extension>();
-        extensions.add(StrikethroughExtension.create());
-        extensions.add(TablesExtension.create());
-        extensions.add(AutolinkExtension.create());
-        extensions.add(InsExtension.create());
-        extensions.add(CommentExtension.create());
-        extensions.add(HeadingAnchorExtension.create());
-
-        Parser parser = Parser.builder().extensions(extensions).build();
-
         init(parser,Caches.blogs);
 
     }
