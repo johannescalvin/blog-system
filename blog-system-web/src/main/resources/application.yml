@@ -7,35 +7,45 @@ spring:
    profiles: develop
    data:
      elasticsearch:
-       cluster-name: elasticsearch
+      # 必须先访问9200端口确定cluster-name,因为安装/启动方式不一样，其cluster-name也不一样
+       cluster-name: docker-cluster
        cluster-nodes: 127.0.0.1:9300
        properties:
          path:
            logs: ./elasticsearch/log
            data: ./elasticsearch/data
+       repositories:
+         enabled: true
+#   cache:
+#     ehcache:
+#       config: classpath:ehcache.xml
 
 blog.git.base: "/home/calvin/data/markdown-blog/blog/"
 markdown-file-base: "/home/calvin/data/markdown-blog/blog/"
 
 blog-system:
+  markdown-file-base: "/home/calvin/data/markdown-blog/blog/"
   link-accessibility-validator:
-    enabled: true
+    enabled: false
   index-page:
     seo-keywords-zh: "个人博客,技术博客,博客系统,markdown博客"
     seo-keywords-en: "IT Blog,Blog System"
     seo-descriptions:
-      - "a description in English"
+      - "首页摘要"
       - "another description"
       - "more description is allowed"
-    display-title: "title display in web page"
-    record-code: "a recode code in is needed"
-    contact: "your email or phone number"
+    display-title: "网站名 | 你喜欢展示的其他名称"
+    record-code: "备案号"
+    contact: "电话 / 邮箱"
 
+  page-view-times:
+    sync-duration-threshold: 20000
 seo:
    site-map:
       store-dir: /home/calvin/blog-site-map/
 server:
    port: 8080
+
 
 
 
