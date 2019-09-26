@@ -31,7 +31,7 @@ public class VisitedTimeServiceImpl implements VisitedTimeService {
         int pageSize = 20;
 
         for (int page = 0; page < (count/pageSize + 1); page++){
-            Pageable pageable = PageRequest.of(page,pageSize, Sort.by("id"));
+            Pageable pageable = PageRequest.of(page,pageSize);
             Page<BlogDocument> documents = blogDocumentRepository.findAll(pageable);
             for (BlogDocument document : documents.getContent()){
                 visitedTimesCache.put(document.getId(),document.getVisitedTimes());

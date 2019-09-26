@@ -58,7 +58,7 @@ public class MarkdownController {
         List<CommentNode> metadatas = metadataUtils.getCommentNodes(document);
         model.addAttribute("metadatas",metadatas);
 
-        String docId = path.substring(0,path.toLowerCase().lastIndexOf(".html"));
+        String docId = path.substring(1,path.toLowerCase().lastIndexOf(".html"));
         long visitedTimes = visitedTimeService.incrementAndGet(docId);
         model.addAttribute("visitedTimes",visitedTimes);
 
