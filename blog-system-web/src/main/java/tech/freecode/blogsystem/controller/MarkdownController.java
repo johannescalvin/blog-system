@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import tech.freecode.blogsystem.service.BlogInitService;
 import tech.freecode.blogsystem.service.MarkdownBlogService;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -25,8 +24,6 @@ public class MarkdownController {
     @Value("${markdown-file-base:}")
     private String basePath;
 
-    @Resource
-    private BlogInitService blogInitService;
     @Resource
     private MarkdownBlogService markdownBlogService;
 
@@ -62,7 +59,7 @@ public class MarkdownController {
         model.addAttribute("metadatas",metadatas);
 
         String docId = path.substring(0,path.toLowerCase().lastIndexOf(".html"));
-        long visitedTimes = visitedTimeService.getVisitedTimes(docId);
+        long visitedTimes = visitedTimeService.incrementAndGet(docId);
         model.addAttribute("visitedTimes",visitedTimes);
 
         return "blog";
@@ -71,7 +68,7 @@ public class MarkdownController {
     @PutMapping("/**/*.md")
     public void update(HttpServletRequest request) {
         String path = request.getRequestURI().substring(1);
-        blogInitService.updateBlog(path);
+        // TODO 文档的更新与删除
     }
 
 
