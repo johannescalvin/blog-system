@@ -64,13 +64,16 @@ public class VisitedTimeServiceImpl implements VisitedTimeService {
         final long savedTimes = times;
         visitedTimesCache.put(id,times);
 
-        executorService.execute(() -> {
-            long stamp = timestampCache.getOrDefault(id,System.currentTimeMillis());
-            long duration = System.currentTimeMillis() - stamp;
-            if ( duration < threshold){
-                return;
-            }
+        // 距离上一次同步不到指定间隔; 直接返回，不必考虑同步至elasticsearch
+        long stamp = timestampCache.getOrDefault(id,System.currentTimeMillis());
+        long duration = System.currentTimeMillis() - stamp;
+        if ( duration < threshold){
+            return times;
+        }
 
+        // 达到间隔时，使用线程池进行异步更新
+        // 不阻塞服务，以达到更好的响应时间
+        executorService.execute(() -> {
             BlogDocument document = blogDocumentRepository.findById(id).get();
             if (document != null){
                 document.setVisitedTimes(savedTimes);
