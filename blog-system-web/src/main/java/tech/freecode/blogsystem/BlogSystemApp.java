@@ -7,8 +7,9 @@ import org.commonmark.ext.gfm.tables.TablesExtension;
 import org.commonmark.ext.ins.InsExtension;
 import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
+import org.commonmark.renderer.text.TextContentRenderer;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.context.annotation.Scope;
 import tech.freecode.commonmark.ext.catalog.HeadingIdExtension;
 import tech.freecode.commonmark.ext.comment.CommentExtension;
 import tech.freecode.commonmark.ext.comment.MetadataUtils;
@@ -45,6 +46,7 @@ public class BlogSystemApp {
 
 
     @Bean
+    @Scope("prototype")
     public Parser parser(){
         Parser parser = Parser.builder().extensions(extensions).build();
         return parser;
@@ -55,5 +57,13 @@ public class BlogSystemApp {
         HtmlRenderer renderer = HtmlRenderer.builder().extensions(extensions).build();
         return renderer;
     }
+
+    @Bean
+    public TextContentRenderer textContentRenderer(){
+        TextContentRenderer renderer = TextContentRenderer.builder()
+                .extensions(extensions).build();
+        return renderer;
+    }
+
 
 }

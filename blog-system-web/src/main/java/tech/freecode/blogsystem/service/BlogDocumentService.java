@@ -11,6 +11,7 @@ import tech.freecode.blogsystem.repository.BlogDocumentRepository;
 
 import javax.annotation.Resource;
 import java.io.File;
+import java.util.Optional;
 
 @Service
 public class BlogDocumentService {
@@ -44,6 +45,37 @@ public class BlogDocumentService {
         }
         
         return blogDocumentRepository.save(document);
+    }
+
+    public boolean delete(String blogId){
+        Optional<BlogDocument> optionalBlogDocument = blogDocumentRepository.findById(blogId);
+
+        if (!optionalBlogDocument.isPresent()){
+            return true;
+        }
+
+        blogDocumentRepository.delete(optionalBlogDocument.get());
+
+        optionalBlogDocument = blogDocumentRepository.findById(blogId);
+
+        return optionalBlogDocument.isPresent();
+
+
+    }
+
+    public BlogDocument update(String blogId){
+        String filepath = fileBase+blogId+".md";
+        return save(filepath);
+    }
+
+    public BlogDocument add(String blogId){
+        String filepath = fileBase+blogId+".md";
+        return save(filepath);
+    }
+
+    public BlogDocument get(String blogId){
+        Optional<BlogDocument> blogDocumentOptional = blogDocumentRepository.findById(blogId);
+        return blogDocumentOptional.isPresent() ? blogDocumentOptional.get() : null;
     }
 
     public Page<BlogDocument> findAll(Pageable pageable){

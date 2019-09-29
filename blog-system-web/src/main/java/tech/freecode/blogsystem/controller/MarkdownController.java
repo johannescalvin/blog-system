@@ -65,11 +65,4 @@ public class MarkdownController {
         return "blog";
     }
 
-    @PutMapping("/**/*.md")
-    public void update(HttpServletRequest request) {
-        String path = request.getRequestURI().substring(1);
-        // TODO 文档的更新与删除
-    }
-
-
 }

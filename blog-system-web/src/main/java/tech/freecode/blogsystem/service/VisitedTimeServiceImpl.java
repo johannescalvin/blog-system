@@ -11,7 +11,6 @@ import tech.freecode.blogsystem.repository.BlogDocumentRepository;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
-import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
