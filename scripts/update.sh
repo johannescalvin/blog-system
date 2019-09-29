@@ -1,8 +1,22 @@
 #!/bin/sh
 
-echo '更新博客脚本开始执行'
-
 base_blog_url='http://localhost:8080'
+
+encode_url(){
+    dest_string=''
+    source_string=`echo -n $1 | od -t x1 -A n | xargs`
+    echo $source_string
+    for str in $source_string; do
+        echo $str
+        if [ $str == '2f' ]; then
+            dest_string=$dest_string'/'
+        else
+            dest_string=$dest_string'%'$str
+        fi
+    done
+    url=$base_blog_url'/'$dest_string
+}
+
 # 最近一个pull操作发生的时间
 last_pull_timestamp=`git --no-pager reflog --format="%C(auto)%H#%cD#%gs" | awk -F '#' '{if(match($3,/pull/)) print $2}' | head -1`
 
@@ -14,7 +28,7 @@ last_pull_timestamp=`git --no-pager reflog --format="%C(auto)%H#%cD#%gs" | awk -
 # 修改
 modified_blogs=`git --no-pager log --pretty=oneline --name-status --since="$last_pull_timestamp" | grep '^M' | awk '{print $2}' | grep '.md$' | tac`
 for blog in $modified_blogs ; do
-    url=$base_blog_url'/'$blog
+    encode_url $blog
     echo '尝试索引并更新 '$url
     curl -X PUT $url
 done
@@ -22,7 +36,7 @@ done
 # 新增
 added_blogs=`git --no-pager log --pretty=oneline --name-status --since="$last_pull_timestamp" | grep '^A' | awk '{print $2}' | grep '.md$' | tac`
 for blog in $added_blogs ; do
-    url=$base_blog_url'/'$blog
+    encode_url $blog
     echo '尝试添加 '$url
     curl -X POST $url
 done
@@ -30,7 +44,7 @@ done
 # 删除
 added_blogs=`git --no-pager log --pretty=oneline --name-status --since="$last_pull_timestamp" | grep '^D' | awk '{print $2}' | grep '.md$' | tac`
 for blog in $added_blogs ; do
-    url=$base_blog_url'/'$blog
+    encode_url $blog
     echo '尝试删除 '$url
     curl -X DELETE $url
 done
@@ -40,11 +54,11 @@ renamed_blogs=`git --no-pager log --pretty=oneline --name-status --since="$last_
 for blog in $added_blogs ; do
     delete_blog=`echo $blog | awk '{print $1}'`
     add_blog=`echo $blog | awk '{print $2}'`
-    url=$base_blog_url'/'$delete_blog
+    encode_url $delete_blog
     echo '尝试删除 '$url
     curl -X DELETE $url
 
-    url=$base_blog_url'/'$add_blog
+    encode_url $add_blog
     echo '尝试添加 '$url
     curl -X POST $url
     
