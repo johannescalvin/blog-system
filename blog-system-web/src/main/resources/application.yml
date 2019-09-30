@@ -20,11 +20,11 @@ spring:
 #     ehcache:
 #       config: classpath:ehcache.xml
 
-blog.git.base: "/home/calvin/data/markdown-blog/blog/"
-markdown-file-base: "/home/calvin/data/markdown-blog/blog/"
+blog.git.base: ${HOME}/markdown-blog/
+markdown-file-base: ${HOME}/markdown-blog/
 
 blog-system:
-  markdown-file-base: "/home/calvin/data/markdown-blog/blog/"
+  markdown-file-base: ${HOME}/markdown-blog/
   link-accessibility-validator:
     enabled: false
   index-page:
