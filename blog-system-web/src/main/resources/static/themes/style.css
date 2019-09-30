@@ -1,0 +1,19 @@
+a {
+    text-decoration:none
+}
+
+code {
+    color: blueviolet;
+}
+
+.catalog{
+    list-style-type: decimal;
+}
+
+#back-to-top {
+    position:fixed;
+    display:none;
+    bottom:1px;
+    right:80px;
+}
+

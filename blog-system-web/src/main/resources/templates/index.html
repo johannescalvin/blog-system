@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="keywords" lang="zh" th:content="${indexPageProps.getSeoKeywordsZh()}"/>
+    <meta name="keywords" lang="en" th:content="${indexPageProps.getSeoKeywordsEn}"/>
+    <th:block th:if="${indexPageProps.getSeoDescriptions()!= null}"  th:each="description : ${indexPageProps.getSeoDescriptions()}">
+        <meta th:name="description" th:content="${description}"/>
+    </th:block>
+    <meta name="title" lang="zh" th:content="${indexPageProps.getDisplayTitle()}"/>
+
+    <title th:text="${indexPageProps.getDisplayTitle()}"></title>
+    <link rel="stylesheet" type="text/css" href="easyui/themes/bootstrap/easyui.css">
+    <script src="easyui/js/jquery.min.js"></script>
+    <script type="text/javascript" src="easyui/js/jquery.easyui.min.js"></script>
+
+</head>
+<body class="easyui-layout">
+<!--<div id="particles" style="width:100%;height: 100%;overflow: hidden;">-->
+<!--<div class="easyui-layout">-->
+
+<style >
+    #north-div .page-header {
+        border: 1px solid #f40;
+        height: 100%;
+        width:30%;
+    }
+
+    #left-page-header {
+        float: left;
+        display: -webkit-box;
+    }
+    #right-page-header {
+        float: right;
+        display: -webkit-box;
+    }
+
+    #logo-div,#nav-menu-div,#search-box-div,#profile-div {
+        padding: 10px;
+        border: 1px solid #f40;
+        height: 100%;
+        /* margin-left: 20px; */
+    }
+
+
+    #logo-div,#nav-menu-div{
+        margin-left: 20px;
+    }
+
+    #profile-div{
+        padding-right: 10px;
+    }
+
+</style>
+
+<div id="north-div" data-options="region:'north',border:true"
+     style="height:70px;padding:5px;width: 100%;
+	border: 1px solid #f40;">
+
+    <div id="left-page-header" class="page-header" style="width:50%;">
+
+        <div id="logo-div" style="width:20%;height: 100%;">logo.svg</div>
+
+        <div id="nav-menu-div" class="easyui-panel" style="width: 60%;
+	border: 1px solid #f40;height: 100%;">
+            <a href="#" class="easyui-linkbutton" data-options="plain:true">Blog</a>
+            <a id="btn-edit" href="#" class="easyui-linkbutton" data-options="plain:true">Nexus</a>
+            <a href="#" class="easyui-menubutton" data-options="menu:'#mm2'">Demo</a>
+            <a href="#" class="easyui-menubutton" data-options="menu:'#mm3'">About</a>
+        </div>
+
+        <div id="mm2" style="width:100px;">
+            <div>Help</div>
+            <div>Update</div>
+            <div>About</div>
+        </div>
+        <div id="mm3" class="menu-content"
+             style="background:#f0f0f0;padding:10px;text-align:left;
+				height: 200px; width: 350px;" >
+            <a href="https://github.com/johannescalvin/blog-system">
+                <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png">
+            </a>
+
+            <div style="font-size:14px;color:#444; padding-top: 30px;">
+                该个人博客使用mardown格式，<br/>
+                在本地编辑完成，由git同步至服务器。<br/>
+                使用git钩子触发基于common-mark的解析程序。<br/>
+                从而对博客的渲染、SEO、索引、统计及版本维护。<br/>
+
+
+            </div>
+        </div>
+    </div>
+
+    <div id="right-page-header" class="page-header" style="width:50%;">
+        <div id="search-box-div" class="easyui-panel" style="width:60%;height: 100%;">
+            <input class="easyui-searchbox" data-options="prompt:'Please Input Value',searcher:doSearch" style="width:100%">
+        </div>
+
+
+        <div id="profile-div" style="width:20%">profile</div>
+    </div>
+    <script>
+        function doSearch(value,name){
+            alert('You input: ' + value+'('+name+')');
+        }
+    </script>
+
+
+</div>
+
+
+<!--<div data-options="region:'north',split:true,border:false" style="height:60px;background:#B3DFDA;padding:10px">north region</div>-->
+<div data-options="region:'west',split:true,title:'West'" style="width:150px;padding:10px;">
+    <div class="easyui-accordion" data-options="fit:true,border:false">
+        <div title="关键词云图" data-options="selected:false" style="padding:10px;">
+
+
+        </div>
+        <div title="技术雷达" data-options="selected:false" style="padding:10px;"></div>
+        <div title="网站统计" data-options="selected:false" style="padding:10px;"></div>
+    </div>
+</div>
+</div>
+<div data-options="region:'east',split:true,collapsed:true,title:'East'" style="width:100px;padding:10px;">east region</div>
+<div data-options="region:'south',border:true"
+     style="
+			height:40px;
+			background:#f8f8f8;
+			padding:5px;
+			padding-left: 30%">
+
+    <span>&copy;个人项目,使用请移步<a href="https://github.com/johannescalvin/blog-system">Github</a></span>
+    <span class="recordcode" th:text="${indexPageProps.getRecordCode()}"></span>
+    <span th:text="${indexPageProps.getContact()}"></span>
+
+</div>
+<div data-options="region:'center',title:'Center'">
+    <style>
+        .blog-list{
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+    <div id="tabs-wrapper-div" class="easyui-tabs" style="width:100%;height:100%">
+        <div title="按创建时间排序" style="padding:10px">
+
+            <ul id="blog-list-with-created-time" class="blog-list">
+
+            </ul>
+            <div id="blog-pagination-with-created-time" class="easyui-pagination"
+                 style="background:#efefef;border:1px solid #ccc;
+								position: absolute; bottom: 0;
+								width: 100%;"
+                 data-options="total:2000,pageSize:10,
+								onSelectPage: function(pageNumber, pageSize){
+								    getBlogsWithCreatedTime(pageNumber, pageSize);
+								}">
+            </div>
+
+        </div>
+
+        <div id="tab-blog-list-with-modified-time" title="按修改时间排序" style="padding:10px"
+        data-options="onSelect:function(){
+            alert('i am selected!');
+        }">
+            <ul id="blog-list-with-modified-time" class="blog-list"></ul>
+            <div id="blog-pagination-with-modified-time"
+                 style="background:#efefef;border:1px solid #ccc;
+								position: absolute; bottom: 0;
+								width: 100%;"
+                 data-options="total:200,pageSize:10,
+								onSelectPage: function(pageNumber, pageSize){
+								    getBlogsWithModifiedTime(pageNumber, pageSize);
+								}">
+            </div>
+        </div>
+        <div title="按被访问次数排序" style="padding:10px">
+            <ul id="blog-list-with-visited-times" class="blog-list"></ul>
+            <div id="blog-pagination-with-visited-times" class="easyui-pagination"
+                 style="background:#efefef;border:1px solid #ccc;
+								position: absolute; bottom: 0;
+								width: 100%;"
+                 data-options="total:500,pageSize:10,
+								onSelectPage: function(pageNumber, pageSize){
+								    getBlogsWithVisitedTime(pageNumber, pageSize);
+								}">
+            </div>
+        </div>
+
+
+    </div>
+    <script type="text/javascript">
+        $('#tabs-wrapper-div').tabs({
+            border:false,
+            onSelect:function(title){
+                alert(title+' is selected');
+                switch (title) {
+                    case "按创建时间排序": {
+                         var nums = $("#blog-list-with-created-time").find("li").length;
+                         if (nums == 0){
+                             getBlogsWithCreatedTime(1,10);
+                         }
+
+                         break;
+                    }
+                    case "按修改时间排序": {
+                        var childNums = $("#blog-list-with-modified-time").find("li").length;
+                        if (childNums == 0){
+                            getBlogsWithModifiedTime(1,10);
+                        }
+                        break;
+                    }
+
+                    case "按被访问次数排序":{
+                        var childNums = $("#blog-list-with-visited-times").find("li").length;
+                        if (childNums == 0){
+                            getBlogsWithVisitedTime(1,10);
+                        }
+                        break;
+                    }
+                }
+            }
+        });
+
+        function getBlogsWithModifiedTime(pageNumber, pageSize){
+            $.ajax({
+                url: '/blogs',
+                method: 'get',
+                dateType: 'json',
+                data:{
+                    page: pageNumber - 1,
+                    size: pageSize,
+                    sort: 'createdTime,asc',
+                    sort: 'modifiedTime,desc'
+                },
+                success:function (docs) {
+                    render(docs,"blog-list-with-modified-time");
+                    var totalElements = docs.totalElements;
+                    $("#blog-pagination-with-modified-time").pagination({
+                        total: totalElements,
+                        pageSize: pageSize
+                    });
+                },
+                error: function () {
+
+                }
+            });
+        }
+        function getBlogsWithCreatedTime(pageNumber, pageSize){
+
+            $.ajax({
+                url: '/blogs',
+                method: 'get',
+                dateType: 'json',
+                data:{
+                    page: pageNumber - 1,
+                    size: pageSize
+                },
+                success:function (docs) {
+                    render(docs,"blog-list-with-created-time");
+
+                    $("#blog-pagination-with-created-time").pagination({
+                        total: docs.totalElements,
+                        pageSize: pageSize
+                    });
+                },
+                error: function () {
+                    
+                }
+            });
+        }
+
+        function getBlogsWithVisitedTime(pageNumber, pageSize){
+
+            $.ajax({
+                url: '/blogs',
+                method: 'get',
+                dateType: 'json',
+                data:{
+                    page: pageNumber - 1,
+                    size: pageSize,
+                    sort: 'visitedTimes,desc',
+                    sort: 'createdTime,asc',
+                    sort: 'modifiedTime,desc'
+                },
+                success:function (docs) {
+                    render(docs,"blog-list-with-visited-times");
+
+                    $("#blog-pagination-with-visited-times").pagination({
+                        total: docs.totalElements,
+                        pageSize: pageSize
+                    });
+                },
+                error: function () {
+
+                }
+            });
+        }
+
+        function render(docs,blogListId){
+            var list = document.getElementById(blogListId);
+            list.innerHTML = "";
+            for(var i = 0; i < docs.content.length; i++){
+                var html = "<div class='blog-item'>" +
+                    "<p class='blog-title'>" +
+                    "   <a href='"+docs.content[i].link+"' target='_blank'>"+docs.content[i].title+"</a>" +
+                    "</p>" +
+                    "<p class='blog-keywords'>";
+                for (var j = 0; j < docs.content[i].keywords.length; j++){
+                    html += "<span>" + docs.content[i].keywords[j] +"</span>";
+                }
+                html += "</p>";
+                html += "</div>";
+
+                var listItem = document.createElement("li");
+                listItem.innerHTML = html;
+
+                list.appendChild(listItem);
+            }
+        }
+
+        $(document).ready(function () {
+            getBlogsWithCreatedTime(1,10);
+        });
+
+    </script>
+</div>
+
+
+
+
+
+</div>
+
+</body>
+</html>
+
