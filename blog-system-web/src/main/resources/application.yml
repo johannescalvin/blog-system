@@ -16,12 +16,6 @@ spring:
            data: ./elasticsearch/data
        repositories:
          enabled: true
-#   cache:
-#     ehcache:
-#       config: classpath:ehcache.xml
-
-blog.git.base: ${HOME}/markdown-blog/
-markdown-file-base: ${HOME}/markdown-blog/
 
 blog-system:
   markdown-file-base: ${HOME}/markdown-blog/
@@ -40,9 +34,11 @@ blog-system:
 
   page-view-times:
     sync-duration-threshold: 20000
-seo:
-   site-map:
-      store-dir: /home/calvin/blog-site-map/
+
+  seo:
+    site-map:
+      store-dir: ${HOME}/blog-site-map/
+
 server:
    port: 8080
 

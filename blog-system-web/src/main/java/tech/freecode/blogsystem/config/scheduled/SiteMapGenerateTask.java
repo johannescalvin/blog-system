@@ -18,10 +18,10 @@ import java.util.TimeZone;
 @Configuration
 public class SiteMapGenerateTask {
 
-    @Value("${seo.site-map.store-dir}")
+    @Value("${blog-system.seo.site-map.store-dir}")
     private String storeDir;
 
-    @Value("${markdown-file-base}")
+    @Value("${blog-system.markdown-file-base}")
     private String markdownFileDir;
 
     @Scheduled(fixedRate = 1000 * 60 * 60 * 24 )
