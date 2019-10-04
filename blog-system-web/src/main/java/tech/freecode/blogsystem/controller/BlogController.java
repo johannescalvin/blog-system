@@ -5,10 +5,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.SortDefault;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import tech.freecode.blogsystem.domain.BlogDocument;
-import tech.freecode.blogsystem.repository.BlogDocumentRepository;
 import tech.freecode.blogsystem.service.BlogDocumentService;
 
 import javax.annotation.Resource;
@@ -21,11 +19,6 @@ public class BlogController {
 
     @Resource
     private BlogDocumentService blogDocumentService;
-
-    @GetMapping("search")
-    public String page(){
-        return "page";
-    }
 
     @GetMapping("/blogs")
     Page<BlogDocument> getBlogs(@PageableDefault(

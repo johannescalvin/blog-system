@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="easyui/themes/bootstrap/easyui.css">
+    <script src="easyui/js/jquery.min.js"></script>
+    <script type="text/javascript" src="easyui/js/jquery.easyui.min.js"></script>
+
+    <meta name="keywords" lang="zh" th:content="${indexPageProps.getSeoKeywordsZh()}"/>
+    <meta name="keywords" lang="en" th:content="${indexPageProps.getSeoKeywordsEn}"/>
+    <th:block th:if="${indexPageProps.getSeoDescriptions()!= null}"  th:each="description : ${indexPageProps.getSeoDescriptions()}">
+        <meta th:name="description" th:content="${description}"/>
+    </th:block>
+    <meta name="title" lang="zh" th:content="${indexPageProps.getDisplayTitle()}"/>
+
+    <title th:text="${indexPageProps.getDisplayTitle()}"></title>
+
+</head>
+<body class="easyui-layout">
+
+<div data-options="region:'center',title:'Center'">
+    <div id="tabs-wrapper-div" class="easyui-tabs" style="width:100%;height:100%">
+        <div title="按相关性排序" style="padding:10px">
+            <ul id="blog-list-with-score" class="blog-list">
+
+            </ul>
+            <div id="blog-pagination-with-score" class="easyui-pagination"
+                 style="background:#efefef;border:1px solid #ccc;
+								position: absolute; bottom: 0;
+								width: 100%;"
+                 data-options="total:2000,pageSize:10,
+								onSelectPage: function(pageNumber, pageSize){
+								    getBlogsWithScore(pageNumber, pageSize);
+								}">
+            </div>
+        </div>
+
+        <script type="text/javascript">
+
+            function getBlogsWithScore(pageNumber, pageSize){
+                $.ajax({
+                    url: '/search',
+                    method: 'post',
+                    dateType: 'json',
+                    data:{
+                        page: pageNumber - 1,
+                        size: pageSize,
+                        sort: '_score,asc'
+                    },
+                    success:function (docs) {
+                        render(docs,"blog-list-with-modified-time");
+                        var totalElements = docs.totalElements;
+                        $("#blog-pagination-with-score").pagination({
+                            total: totalElements,
+                            pageSize: pageSize
+                        });
+                    },
+                    error: function () {
+
+                    }
+                });
+            }
+        </script>
+    </div>
+</div>
+
+</body>
+</html>

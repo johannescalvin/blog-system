@@ -42,7 +42,9 @@
         /* margin-left: 20px; */
     }
 
-
+    #search-box-div {
+       float: left;
+    }
     #logo-div,#nav-menu-div{
         margin-left: 20px;
     }
@@ -94,16 +96,58 @@
 
     <div id="right-page-header" class="page-header" style="width:50%;">
         <div id="search-box-div" class="easyui-panel" style="width:60%;height: 100%;">
-            <input class="easyui-searchbox" data-options="prompt:'Please Input Value',searcher:doSearch" style="width:100%">
+            <span id="search-box" style="width: 80%; height: 100%"></span>
+            <span class="textbox-icon searchbox-button" onclick="doSearch()"></span>
         </div>
 
 
         <div id="profile-div" style="width:20%">profile</div>
     </div>
     <script>
-        function doSearch(value,name){
-            alert('You input: ' + value+'('+name+')');
+        $('#search-box').combobox({
+            prompt: '输入关键字自动检索',
+            hasDownArrow: false,
+            // mode: 'remote',
+            triggerAction: 'all',
+            minChars: 2,
+            editable: true,
+            method: 'get',
+            valueField: 'text',
+            textField: 'text',
+            data: {},
+            onChange: function(newValue){
+                if(newValue != null && newValue !== '') {
+                    var entryName = $('#search-box').combobox('getText');
+                    console.log(entryName);
+                    $("#search-box").combobox('reload','/auto_complete?prefix='+entryName);
+                }
+
+                if (newValue ==="") {
+                    $('#search-box').combobox('loadData', {});
+                    $("#search-box").combobox('clear').combobox('loadData', {});
+                }
+            }
+
+        });
+
+        $("#_easyui_textbox_input1")
+            .bind('keydown',function(e){
+                // 兼容FF和IE和Opera
+                var theEvent = e || window.event;
+                var code = theEvent.keyCode || theEvent.which || theEvent.charCode;
+                if (code == 13) {
+                    doSearch();
+                }
+
+        });
+
+        function doSearch() {
+            var entryName = $('#search-box').combobox('getText');
+            if (entryName != null && entryName != '') {
+                window.open("/search?query="+entryName);
+            }
         }
+
     </script>
 
 
@@ -117,7 +161,80 @@
 
 
         </div>
-        <div title="技术雷达" data-options="selected:false" style="padding:10px;"></div>
+        <div title="技术雷达" data-options="selected:false" style="padding:10px;">
+            <!--Step:1 为ECharts准备一个具备大小（宽高）的Dom-->
+            <div id="radar-graphic" style="width:500px;height:500px;border:1px solid #ccc;padding:10px;"></div>
+            <!--Step:2 引入echarts.js-->
+            <script src="echart/js/echarts.js"></script>
+            <!-- Step:3 为模块加载器配置echarts的路径，从当前页面链接到echarts.js，定义所需图表路径 -->
+            <script type="text/javascript" th:inline="javascript">
+                /*<![CDATA[*/
+
+                require.config({
+                    paths: {
+                        echarts: './echart/js'
+                    }
+                });
+
+                // Step:4 动态加载echarts然后在回调函数中开始使用，注意保持按需加载结构定义图表路径
+                require(
+                    [
+                        'echarts',
+                        'echarts/chart/radar'
+                    ],
+                    function (ec) {
+                        //--- 雷达图 ---
+                        var myChart = ec.init(document.getElementById('radar-graphic'));
+
+                        // 指定图表的配置项和数据
+                        var option = {
+                            title : {
+                                text: '预算'
+                            },
+                            tooltip : {
+                                trigger: 'axis'
+                            },
+                            legend: {
+                                orient : 'vertical',
+                                x : 'right',
+                                y : 'bottom',
+                                data:['预算分配']
+                            },
+                            toolbox: {
+                                show : false,
+                                feature : {
+                                    mark : {show: true},
+                                    dataView : {show: true, readOnly: false},
+                                    restore : {show: true},
+                                    saveAsImage : {show: true}
+                                }
+                            },
+                            polar : [
+                                {
+                                    indicator : [[${indicators}]]
+                                }
+                            ],
+                            calculable : true,
+                            series : [
+                                {
+                                    name: '预算 vs 开销',
+                                    type: 'radar',
+                                    data : [
+                                        {
+                                            value : [[${list}]],
+                                            name : '预算分配'
+                                        }
+                                    ]
+                                }
+                            ]
+                        };
+
+                        myChart.setOption(option);
+                    }
+                );
+                /*]]>*/
+            </script>
+        </div>
         <div title="网站统计" data-options="selected:false" style="padding:10px;"></div>
     </div>
 </div>
@@ -160,10 +277,7 @@
 
         </div>
 
-        <div id="tab-blog-list-with-modified-time" title="按修改时间排序" style="padding:10px"
-        data-options="onSelect:function(){
-            alert('i am selected!');
-        }">
+        <div id="tab-blog-list-with-modified-time" title="按修改时间排序" style="padding:10px">
             <ul id="blog-list-with-modified-time" class="blog-list"></ul>
             <div id="blog-pagination-with-modified-time"
                  style="background:#efefef;border:1px solid #ccc;
@@ -194,7 +308,6 @@
         $('#tabs-wrapper-div').tabs({
             border:false,
             onSelect:function(title){
-                alert(title+' is selected');
                 switch (title) {
                     case "按创建时间排序": {
                          var nums = $("#blog-list-with-created-time").find("li").length;
