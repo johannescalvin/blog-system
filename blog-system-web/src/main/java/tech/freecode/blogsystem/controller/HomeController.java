@@ -1,10 +1,12 @@
 package tech.freecode.blogsystem.controller;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import tech.freecode.blogsystem.config.IndexPageProps;
+import tech.freecode.blogsystem.service.AutoCompleteService;
 import tech.freecode.blogsystem.service.KeywordsService;
 
 import javax.annotation.Resource;
@@ -18,6 +20,9 @@ public class HomeController {
     private IndexPageProps indexPageProps;
     @Resource
     private KeywordsService keywordsService;
+
+    @Resource
+    private AutoCompleteService autoCompleteService;
 
     @GetMapping("/")
     public String index(Model model){
@@ -42,7 +47,26 @@ public class HomeController {
         indicators.add(new Indicator("市场",25000));
 
         model.addAttribute("indicators",indicators);
+
+        ArrayList<TagCloudItem> tagCloudItems = new ArrayList<>();
+        for (AutoCompleteService.Item item : autoCompleteService.autoComplete("")){
+            TagCloudItem tagCloudItem = new TagCloudItem(item.getText(),"/search?query="+item.getText());
+            tagCloudItems.add(tagCloudItem);
+        }
+
+        model.addAttribute("tagCloudEntrys",tagCloudItems);
         return "index";
+    }
+
+    @Data
+    private static class TagCloudItem {
+        private String label;
+        private String url;
+
+        public TagCloudItem(String label, String url) {
+            this.label = label;
+            this.url = url;
+        }
     }
 
     @Data

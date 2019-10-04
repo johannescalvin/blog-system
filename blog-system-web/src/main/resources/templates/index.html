@@ -158,8 +158,46 @@
 <div data-options="region:'west',split:true,title:'West'" style="width:150px;padding:10px;">
     <div class="easyui-accordion" data-options="fit:true,border:false">
         <div title="关键词云图" data-options="selected:false" style="padding:10px;">
+            <div id="tag-cloud"></div>
+            <script type="text/javascript" src="js/jquery.svg3dtagcloud.min.js"></script>
+            <script type="text/javascript" th:inline="javascript">
+                var entries = [[${tagCloudEntrys}]];
+                var settings = {
 
+                    entries: entries,
+                    width: 480,
+                    height: 480,
+                    radius: '65%',
+                    radiusMin: 75,
+                    bgDraw: true,
+                    bgColor: '#F8F8F8',
+                    opacityOver: 1.00,
+                    opacityOut: 0.05,
+                    opacitySpeed: 6,
+                    fov: 800,
+                    speed: 2,
+                    fontFamily: 'Oswald, Arial, sans-serif',
+                    fontSize: '15',
+                    fontColor: '#111',
+                    fontWeight: 'normal',//bold
+                    fontStyle: 'normal',//italic
+                    fontStretch: 'normal',//wider, narrower, ultra-condensed, extra-condensed, condensed, semi-condensed, semi-expanded, expanded, extra-expanded, ultra-expanded
+                    fontToUpperCase: true,
+                    tooltipFontFamily: 'Oswald, Arial, sans-serif',
+                    tooltipFontSize: '11',
+                    tooltipFontColor: '#111',
+                    tooltipFontWeight: 'normal',//bold
+                    tooltipFontStyle: 'normal',//italic
+                    tooltipFontStretch: 'normal',//wider, narrower, ultra-condensed, extra-condensed, condensed, semi-condensed, semi-expanded, expanded, extra-expanded, ultra-expanded
+                    tooltipFontToUpperCase: false,
+                    tooltipTextAnchor: 'left',
+                    tooltipDiffX: 0,
+                    tooltipDiffY: 10
 
+                };
+
+                $( '#tag-cloud').svg3DTagCloud( settings );
+            </script>
         </div>
         <div title="技术雷达" data-options="selected:false" style="padding:10px;">
             <!--Step:1 为ECharts准备一个具备大小（宽高）的Dom-->
@@ -169,7 +207,6 @@
             <!-- Step:3 为模块加载器配置echarts的路径，从当前页面链接到echarts.js，定义所需图表路径 -->
             <script type="text/javascript" th:inline="javascript">
                 /*<![CDATA[*/
-
                 require.config({
                     paths: {
                         echarts: './echart/js'
@@ -439,10 +476,6 @@
 
     </script>
 </div>
-
-
-
-
 
 </div>
 
