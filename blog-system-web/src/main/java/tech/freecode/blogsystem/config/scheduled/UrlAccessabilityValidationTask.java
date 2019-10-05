@@ -125,7 +125,7 @@ import java.util.stream.Collectors;
 @ConditionalOnProperty(name = "blog-system.link-accessibility-validator.enabled",havingValue = "true")
 public class UrlAccessabilityValidationTask {
 
-    @Value("${markdown-file-base}")
+    @Value("${blog-system.markdown-file-base}")
     private String fileBase;
 
     @Resource

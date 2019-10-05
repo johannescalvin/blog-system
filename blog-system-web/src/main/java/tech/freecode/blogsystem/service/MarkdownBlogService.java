@@ -28,7 +28,7 @@ import java.util.List;
 @Service
 public class MarkdownBlogService {
 
-    @Value("${markdown-file-base:}")
+    @Value("${blog-system.markdown-file-base}")
     private String basePath ;
 
     @Resource

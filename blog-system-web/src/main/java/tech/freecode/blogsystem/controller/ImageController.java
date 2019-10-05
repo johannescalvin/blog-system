@@ -11,7 +11,7 @@ import java.net.URLDecoder;
 
 @Controller
 public class ImageController {
-    @Value("${markdown-file-base:}")
+    @Value("${blog-system.markdown-file-base}")
     private String basePath;
 
     @GetMapping("/**/*.svg")

@@ -40,7 +40,7 @@ public class BlogExtractorService {
 
         markdownDocument.accept(headingVisitor);
         Map<Integer, List<String>> titles = headingVisitor.getTitles();
-        if (titles.containsKey(1) && titles.get(1) != null && titles.get(1).size() == 1){
+        if (titles.containsKey(1) && titles.get(1) != null && titles.get(1).size() >= 1){
             String title = titles.get(1).get(0);
             if (title != null && title.trim().length() != 0){
                 blogDocument.setTitle(title);

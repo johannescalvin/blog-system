@@ -1,6 +1,6 @@
 spring:
    profiles:
-      active: develop
+      active: production
 
 ---
 spring:
@@ -38,6 +38,7 @@ blog-system:
   seo:
     site-map:
       store-dir: ${HOME}/blog-site-map/
+
 
 server:
    port: 8080

@@ -21,9 +21,6 @@ import java.util.Set;
 @Controller
 public class MarkdownController {
 
-    @Value("${markdown-file-base:}")
-    private String basePath;
-
     @Resource
     private MarkdownBlogService markdownBlogService;
 

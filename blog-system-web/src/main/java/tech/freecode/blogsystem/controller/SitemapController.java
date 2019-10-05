@@ -11,7 +11,7 @@ import java.io.File;
 
 @Controller
 public class SitemapController {
-    @Value("${seo.site-map.store-dir}")
+    @Value("${blog-system.seo.site-map.store-dir}")
     private String siteMapFileStoreDir;
 
     @GetMapping(value = "/admin/site-map/{filename}",produces = "application/xml;charset=UTF-8")
