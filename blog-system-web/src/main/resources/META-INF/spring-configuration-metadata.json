@@ -1,0 +1,120 @@
+{
+  "groups": [
+    {
+      "name": "blog-system",
+      "description": "Configuration Item Group of Personal Blog System."
+    },
+    {
+      "name": "blog-system.index-page",
+      "description": "information which will be displayed in the welcome page.",
+      "sourceType": "tech.freecode.blogsystem.config.IndexPageProps",
+      "type": "tech.freecode.blogsystem.config.IndexPageProps"
+    }
+  ],
+
+  "properties": [
+    {
+      "name": "blog-system.markdown-file-base",
+      "description": "git work dir where you markdown blogs locate,make sure that you have full permission of this dir.",
+      "type": "java.lang.String",
+      "defaultValue": "${HOME}/markdown-blog/"
+    },
+
+    {
+      "name": "blog-system.link-accessibility-validator.enabled",
+      "description": "detect invalid link url (both interanl and external) periodically.",
+      "type": "java.lang.Boolean",
+      "defaultValue": true
+
+    },
+    {
+      "name": "blog-system.index-page.seo-keywords-zh",
+      "description": "展示在首页的中文关键词",
+      "type": "java.lang.String",
+      "defaultValue": "博客,个人博客,技术博客"
+    },
+    {
+      "name": "blog-system.index-page.seo-keywords-en",
+      "description": "keywords displayed in meta tags of the welcome page",
+      "type": "java.lang.String",
+      "defaultValue": "IT Blog,Blog System"
+    },
+    {
+      "name": "blog-system.index-page.seo-descriptions",
+      "description": "descriptions for web page seo purpose.",
+      "type": "java.util.List<java.lang.String>"
+    },
+    {
+      "name": "blog-system.index-page.display-title",
+      "description": "title displayed in welcome page",
+      "type": "java.lang.String",
+      "defaultValue": "Markdown Blog System"
+    },
+    {
+      "name": "blog-system.index-page.recode-code",
+      "description": "网站备案号",
+      "type": "java.lang.String",
+      "defaultValue": "recode code for verify"
+    },
+    {
+      "name": "blog-system.index-page.contact",
+      "description": "contact infomation",
+      "type": "java.lang.String",
+      "defaultValue": "contact us ..."
+    },
+    {
+      "name": "blog-system.page-view-times.sync-duration-seconds-threshold",
+      "description": "seconds-threshold that a cached visited times will be persistent asynchronously",
+      "type": "java.lang.Long",
+      "defaultValue": 1800
+    },
+    {
+      "name": "blog-system.seo.site-map.store-dir",
+      "description": "dir where site map of blog system locates",
+      "type": "java.lang.String"
+
+    }
+  ],
+
+  "hints": [
+    {
+      "name": "blog-system.seo.site-map.store-dir",
+      "values": [
+        {
+          "value": "${HOME}/blog-site-map/"
+        }
+      ]
+    },
+    {
+      "name": "blog-system.markdown-file-base",
+      "values": [
+        {
+          "value": "${HOME}/markdown-blog/"
+        }
+      ]
+    },
+    {
+      "name": "blog-system.page-view-times.sync-duration-seconds-threshold",
+      "values": [
+        {
+          "value": 30,
+          "description": "one minute"
+        },
+
+        {
+          "value": 1800,
+          "description": "half an hour"
+        },
+        {
+          "value": 3600,
+          "description": "one hour"
+        },
+        {
+          "value": 86400,
+          "description": "one day"
+        }
+      ]
+    }
+
+  ]
+}

@@ -1,51 +1,45 @@
-spring:
-   profiles:
-      active: production
-
----
-spring:
-   profiles: develop
-   data:
-     elasticsearch:
-      # 必须先访问9200端口确定cluster-name,因为安装/启动方式不一样，其cluster-name也不一样
-       cluster-name: docker-cluster
-       cluster-nodes: 127.0.0.1:9300
-       properties:
-         path:
-           logs: ./elasticsearch/log
-           data: ./elasticsearch/data
-       repositories:
-         enabled: true
-
-blog-system:
-  markdown-file-base: ${HOME}/markdown-blog/
-  link-accessibility-validator:
-    enabled: false
-  index-page:
-    seo-keywords-zh: "个人博客,技术博客,博客系统,markdown博客"
-    seo-keywords-en: "IT Blog,Blog System"
-    seo-descriptions:
-      - "首页摘要"
-      - "another description"
-      - "more description is allowed"
-    display-title: "网站名 | 你喜欢展示的其他名称"
-    record-code: "备案号"
-    contact: "电话 / 邮箱"
-
-  page-view-times:
-    sync-duration-threshold: 20000
-
-  seo:
-    site-map:
-      store-dir: ${HOME}/blog-site-map/
-
-
-server:
-   port: 8080
-
-
-
-
-
-
+#spring:
+#   profiles:
+#      active: production
+#
+#---
+#spring:
+#   profiles: develop
+#   data:
+#     elasticsearch:
+#      # 必须先访问9200端口确定cluster-name,因为安装/启动方式不一样，其cluster-name也不一样
+#       cluster-name: docker-cluster
+#       cluster-nodes: 127.0.0.1:9300
+#       properties:
+#         path:
+#           logs: ./elasticsearch/log
+#           data: ./elasticsearch/data
+#       repositories:
+#         enabled: true
+#
+#
+#blog-system:
+#  markdown-file-base: ${HOME}/markdown-blog/
+#  link-accessibility-validator:
+#    enabled: false
+#  index-page:
+#    seo-keywords-zh: "个人博客,技术博客,博客系统,markdown博客"
+#    seo-keywords-en: "IT Blog,Blog System"
+#    seo-descriptions:
+#      - "首页摘要"
+#      - "another description"
+#      - "more description is allowed"
+#    display-title: "网站名 | 你喜欢展示的其他名称"
+#    record-code: "备案号"
+#    contact: "电话 / 邮箱"
+#
+#  page-view-times:
+#    sync-duration-seconds-threshold: 20000
+#
+#  seo:
+#    site-map:
+#      store-dir: ${HOME}/blog-site-map/
+#
+#server:
+#   port: 8080
 

@@ -21,7 +21,7 @@ public class VisitedTimeServiceImpl implements VisitedTimeService {
     @Resource
     private BlogDocumentRepository blogDocumentRepository;
 
-    @Value("${blog-system.page-view-times.sync-duration-threshold}")
+    @Value("${blog-system.page-view-times.sync-duration-seconds-threshold}")
     private long threshold;
 
     private ConcurrentHashMap<String,Long> visitedTimesCache;
@@ -66,7 +66,7 @@ public class VisitedTimeServiceImpl implements VisitedTimeService {
         // 距离上一次同步不到指定间隔; 直接返回，不必考虑同步至elasticsearch
         long stamp = timestampCache.getOrDefault(id,System.currentTimeMillis());
         long duration = System.currentTimeMillis() - stamp;
-        if ( duration < threshold){
+        if ( duration/1000 < threshold){
             return times;
         }
 
