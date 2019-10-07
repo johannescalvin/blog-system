@@ -16,6 +16,9 @@ spring:
            data: ./elasticsearch/data
        repositories:
          enabled: true
+   cache:
+     jcache:
+       config: classpath:ehcache.xml
 
 
 blog-system:
@@ -42,4 +45,3 @@ blog-system:
 
 server:
    port: 8080
-

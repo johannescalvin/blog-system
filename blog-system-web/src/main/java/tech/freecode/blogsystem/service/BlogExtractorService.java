@@ -26,7 +26,6 @@ public class BlogExtractorService {
     private PublishedTimeVisitor publishedTimeVisitor = new PublishedTimeVisitor();
     private CodeVisitor codeVisitor = new CodeVisitor();
 
-
     private TextContentRenderer textContentRenderer;
     private String fileBase;
 
@@ -36,6 +35,7 @@ public class BlogExtractorService {
     }
 
     private BlogDocument parse(Node markdownDocument){
+
         BlogDocument blogDocument = new BlogDocument();
 
         markdownDocument.accept(headingVisitor);
@@ -84,17 +84,13 @@ public class BlogExtractorService {
         return blogDocument;
     }
 
-    public BlogDocument parse(Parser parser,String markdownFilepath){
+    public BlogDocument parse(Node markdownDocument,String markdownFilepath){
+
         if (markdownFilepath == null || (!markdownFilepath.toLowerCase().endsWith(".md"))){
             return null;
         }
         File markdownFile = new File(markdownFilepath);
-        String markdown = FileUtils.getFileContentFromDisk(markdownFile);
-        if (markdown == null || markdown.length() == 0){
-            return null;
-        }
 
-        Node markdownDocument = parser.parse(markdown);
         BlogDocument document = parse(markdownDocument);
 
         Date modifiedTime = new Date(markdownFile.lastModified());
@@ -103,8 +99,6 @@ public class BlogExtractorService {
         if (document.getCreatedTime() == null){
             document.setCreatedTime(modifiedTime);
         }
-
-
 
         String link = markdownFilepath.substring(fileBase.length(),markdownFilepath.toLowerCase().lastIndexOf(".md"));
         String id = link;

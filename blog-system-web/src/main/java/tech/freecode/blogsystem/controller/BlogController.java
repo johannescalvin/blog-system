@@ -7,7 +7,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.SortDefault;
 import org.springframework.web.bind.annotation.*;
 import tech.freecode.blogsystem.domain.BlogDocument;
-import tech.freecode.blogsystem.service.BlogDocumentService;
+import tech.freecode.blogsystem.service.BlogDocumentServiceImpl;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +18,7 @@ import java.net.URLDecoder;
 public class BlogController {
 
     @Resource
-    private BlogDocumentService blogDocumentService;
+    private BlogDocumentServiceImpl blogDocumentService;
 
     @GetMapping("/blogs")
     Page<BlogDocument> getBlogs(@PageableDefault(

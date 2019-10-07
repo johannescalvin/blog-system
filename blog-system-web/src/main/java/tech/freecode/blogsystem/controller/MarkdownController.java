@@ -39,7 +39,8 @@ public class MarkdownController {
 
         }
 
-        Node document  = markdownBlogService.parseMarkdown(path);
+        String blogId = path.substring(1,path.toLowerCase().lastIndexOf(".html"));
+        Node document  = markdownBlogService.parseMarkdown(blogId);
 
         LanguageVisitor visitor = new LanguageVisitor();
         document.accept(visitor);

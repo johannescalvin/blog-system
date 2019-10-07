@@ -9,6 +9,8 @@ import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
 import org.commonmark.renderer.text.TextContentRenderer;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.context.annotation.Scope;
 import tech.freecode.commonmark.ext.catalog.HeadingIdExtension;
 import tech.freecode.commonmark.ext.comment.CommentExtension;
@@ -23,6 +25,7 @@ import java.util.List;
 
 @SpringBootApplication
 @EnableConfigurationProperties
+@EnableCaching
 public class BlogSystemApp {
     public static void main(String[] args) {
         SpringApplication.run(BlogSystemApp.class,args);
@@ -64,6 +67,10 @@ public class BlogSystemApp {
                 .extensions(extensions).build();
         return renderer;
     }
+
+//    public KeyGenerator blodIdKeyGenerator(){
+//
+//    }
 
 
 }
