@@ -45,3 +45,5 @@ blog-system:
 
 server:
    port: 8080
+http:
+  port: 8443
