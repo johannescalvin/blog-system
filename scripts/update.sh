@@ -1,6 +1,6 @@
 #!/bin/sh
 
-base_blog_url='http://localhost:8080'
+base_blog_url='http://localhost:9981'
 
 encode_url(){
     dest_string=''
@@ -30,7 +30,7 @@ modified_blogs=`git --no-pager log --pretty=oneline --name-status --since="$last
 for blog in $modified_blogs ; do
     encode_url $blog
     echo '尝试索引并更新 '$url
-    curl -X PUT $url
+    curl -X PUT --insecure $url
 done
 
 # 新增
@@ -38,7 +38,7 @@ added_blogs=`git --no-pager log --pretty=oneline --name-status --since="$last_pu
 for blog in $added_blogs ; do
     encode_url $blog
     echo '尝试添加 '$url
-    curl -X POST $url
+    curl -X POST --insecure $url
 done
 
 # 删除
@@ -46,7 +46,7 @@ added_blogs=`git --no-pager log --pretty=oneline --name-status --since="$last_pu
 for blog in $added_blogs ; do
     encode_url $blog
     echo '尝试删除 '$url
-    curl -X DELETE $url
+    curl -X DELETE --insecure $url
 done
 
 # 重命名
@@ -56,11 +56,11 @@ for blog in $added_blogs ; do
     add_blog=`echo $blog | awk '{print $2}'`
     encode_url $delete_blog
     echo '尝试删除 '$url
-    curl -X DELETE $url
+    curl -X DELETE --insecure $url
 
     encode_url $add_blog
     echo '尝试添加 '$url
-    curl -X POST $url
+    curl -X POST --insecure $url
     
 done
 

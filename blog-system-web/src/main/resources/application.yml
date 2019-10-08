@@ -42,8 +42,13 @@ blog-system:
   seo:
     site-map:
       store-dir: ${HOME}/blog-site-map/
+  blog-document-crud-admin:
+    user-name: admin
+    user-password: password
 
 server:
-   port: 8080
+   port: 8443
 http:
-  port: 8443
+  port: 8080
+
+

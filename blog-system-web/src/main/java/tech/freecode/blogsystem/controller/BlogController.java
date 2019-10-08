@@ -5,6 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.SortDefault;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import tech.freecode.blogsystem.domain.BlogDocument;
 import tech.freecode.blogsystem.service.BlogDocumentServiceImpl;
@@ -32,24 +33,28 @@ public class BlogController {
     }
 
     @PutMapping("/**/*.md")
+    @Secured("ROLE_ADMIN")
     public void update(HttpServletRequest request) {
         String blogId = getBlogId(request);
         blogDocumentService.update(blogId);
     }
 
     @DeleteMapping("/**/*.md")
+    @Secured("ROLE_ADMIN")
     public boolean delete(HttpServletRequest request){
         String blogId = getBlogId(request);
         return blogDocumentService.delete(blogId);
     }
 
     @PostMapping("/**/*.md")
+    @Secured("ROLE_ADMIN")
     public void add(HttpServletRequest request){
         String blogId = getBlogId(request);
         blogDocumentService.add(blogId);
     }
 
     @GetMapping("/**/*.md")
+    @Secured("ROLE_ADMIN")
     public BlogDocument get(HttpServletRequest request){
         String blogId = getBlogId(request);
         return blogDocumentService.get(blogId);

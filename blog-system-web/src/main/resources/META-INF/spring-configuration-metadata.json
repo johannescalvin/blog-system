@@ -73,7 +73,26 @@
       "description": "dir where site map of blog system locates",
       "type": "java.lang.String"
 
+    },
+    {
+      "name": "blog-system.blog-document-crud-admin.user-name",
+      "description": "user name who have permission to do crud operations.",
+      "type": "java.lang.String",
+      "defaultValue": "admin"
+    },
+    {
+      "name": "blog-system.blog-document-crud-admin.user-password",
+      "description": "user password to do crud operations.",
+      "type": "java.lang.String",
+      "defaultValue": "password"
+    },
+
+    {
+      "name": "http.port",
+      "description": "when https is enabled,use this port to run http",
+      "type": "java.lang.String"
     }
+
   ],
 
   "hints": [
