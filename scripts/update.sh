@@ -1,6 +1,6 @@
 #!/bin/sh
 
-base_blog_url='http://localhost:9981'
+base_blog_url='https://localhost:9981'
 
 encode_url(){
     dest_string=''

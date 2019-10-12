@@ -8,7 +8,7 @@ spring:
    data:
      elasticsearch:
       # 必须先访问9200端口确定cluster-name,因为安装/启动方式不一样，其cluster-name也不一样
-       cluster-name: docker-cluster
+       cluster-name: elasticsearch
        cluster-nodes: 127.0.0.1:9300
        properties:
          path:
