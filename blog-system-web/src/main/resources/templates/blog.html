@@ -58,13 +58,36 @@
         });
     </script>
 
-    <!-- latext formual display support -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/katex.css" integrity="sha384-b/NoaeRXkMxyKcrDw2KtVtYKkVg3dA0rTRgLoV7W2df3MzeR1eHLTi+l4//4fMwk" crossorigin="anonymous">
+    <th:block th:if="${languages.contains('latex')}">
+        <!-- latext formual display support -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/katex.css" integrity="sha384-b/NoaeRXkMxyKcrDw2KtVtYKkVg3dA0rTRgLoV7W2df3MzeR1eHLTi+l4//4fMwk" crossorigin="anonymous">
+        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/katex.js" integrity="sha384-ern5NCRqs6nJ/a4Ik0nB9hnKVH5HwV2XRUYdQl09OB/vvd1Lmmqbg1Mh+mYUclXx" crossorigin="anonymous"></script>
+    </th:block>
 
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/katex.js" integrity="sha384-ern5NCRqs6nJ/a4Ik0nB9hnKVH5HwV2XRUYdQl09OB/vvd1Lmmqbg1Mh+mYUclXx" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/bootstrap/easyui.css">
+    <script src="/easyui/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/easyui/js/jquery.easyui.min.js"></script>
+
 </head>
 
-<body>
+<body class="easyui-layout">
+
+<div id="north-div" split="false"
+     data-options="region:'north',border:true"
+     style="height:70px;padding:5px;width: 100%;
+	border: 1px solid #f40;">
+    <div th:include="header::header"></div>
+</div>
+
+<div data-options="region:'south',border:true"
+     style="
+			height:40px;
+			background:#f8f8f8;
+			padding:5px;
+			padding-left: 30%">
+    <div th:include="footer::footer"></div>
+</div>
+<div data-options="region:'center',title:'Center'">
 
 <p id="back-to-top"><a href="#top">返回顶部</a></p>
 
@@ -141,6 +164,6 @@
         mermaid.initialize({startOnLoad:true});
     });
 </script>
-
+</div>
 </body>
 </html>

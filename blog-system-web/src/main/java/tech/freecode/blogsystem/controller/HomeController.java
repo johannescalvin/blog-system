@@ -57,6 +57,7 @@ public class HomeController {
         model.addAttribute("tagCloudEntrys",tagCloudItems);
         return "index";
     }
+    
 
     @Data
     private static class TagCloudItem {

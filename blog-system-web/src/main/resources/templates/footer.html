@@ -4,8 +4,10 @@
 
 <body>
 
-<div th:fragment="copy">
-    &copy; 2011 The Good Thymes Virtual Grocery
+<div th:fragment="footer">
+    <span>&copy;个人项目,使用请移步<a href="https://github.com/johannescalvin/blog-system">Github</a></span>
+    <span class="recordcode" th:text="${indexPageProps.getRecordCode()}"></span>
+    <span th:text="${indexPageProps.getContact()}"></span>
 </div>
 
 </body>

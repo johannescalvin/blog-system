@@ -1,6 +1,7 @@
 package tech.freecode.blogsystem.controller;
 
 
+import tech.freecode.blogsystem.config.IndexPageProps;
 import tech.freecode.blogsystem.service.VisitedTimeService;
 import tech.freecode.commonmark.ext.comment.CommentNode;
 import tech.freecode.commonmark.ext.comment.MetadataUtils;
@@ -29,6 +30,9 @@ public class MarkdownController {
 
     @Resource
     private VisitedTimeService visitedTimeService;
+
+    @Resource
+    private IndexPageProps indexPageProps;
 
     @GetMapping("/**/*.html")
     public String getBlog(HttpServletRequest request, Model model){
@@ -59,6 +63,8 @@ public class MarkdownController {
         String docId = path.substring(1,path.toLowerCase().lastIndexOf(".html"));
         long visitedTimes = visitedTimeService.incrementAndGet(docId);
         model.addAttribute("visitedTimes",visitedTimes);
+
+        model.addAttribute("indexPageProps",indexPageProps);
 
         return "blog";
     }
