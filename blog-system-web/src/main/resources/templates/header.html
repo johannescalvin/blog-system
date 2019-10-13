@@ -2,7 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>代码驿站 | 杨承铸的个人博客</title>
+    <link rel="stylesheet" type="text/css" href="easyui/themes/bootstrap/easyui.css">
+    <script src="easyui/js/jquery.min.js"></script>
+    <script type="text/javascript" src="easyui/js/jquery.easyui.min.js"></script>
 </head>
 <body>
 
@@ -11,7 +14,7 @@
 
     <style >
         #north-div .page-header {
-            border: 1px solid #f40;
+            /*border: 1px solid #f40;*/
             height: 100%;
             width:30%;
         }
@@ -26,8 +29,8 @@
         }
 
         #logo-div,#nav-menu-div,#search-box-div,#profile-div {
-            padding: 10px;
-            border: 1px solid #f40;
+            /*padding: 10px;*/
+            /*border: 1px solid #f40;*/
             height: 100%;
             /* margin-left: 20px; */
         }
@@ -47,11 +50,12 @@
 
     <div id="left-page-header" class="page-header" style="width:50%;">
 
-        <div id="logo-div" style="width:20%;height: 100%;">logo.svg</div>
+        <div id="logo-div" style="width:20%;height: 100%;" onclick="window.open('/','_top')">
+            <a href="/" style="margin-left: 20px;"><img src="/logo.png" style="width: 50px; height: 50px;"/></a>
+        </div>
 
-        <div id="nav-menu-div" class="easyui-panel" style="width: 60%;
-	border: 1px solid #f40;height: 100%;">
-            <a href="#" class="easyui-linkbutton" data-options="plain:true">Blog</a>
+        <div id="nav-menu-div" class="easyui-panel" style="width: 60%;height: 100%;">
+            <a href="/" class="easyui-linkbutton" data-options="plain:true">Blog</a>
             <a id="btn-edit" href="#" class="easyui-linkbutton" data-options="plain:true">Nexus</a>
             <a href="#" class="easyui-menubutton" data-options="menu:'#mm2'">Demo</a>
             <a href="#" class="easyui-menubutton" data-options="menu:'#mm3'">About</a>

@@ -10,14 +10,16 @@
     <meta name="title" lang="zh" th:content="${indexPageProps.getDisplayTitle()}"/>
 
     <title th:text="${indexPageProps.getDisplayTitle()}"></title>
-    <link rel="stylesheet" type="text/css" href="easyui/themes/bootstrap/easyui.css">
-    <script src="easyui/js/jquery.min.js"></script>
-    <script type="text/javascript" src="easyui/js/jquery.easyui.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/bootstrap/easyui.css">
+    <script src="/easyui/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/easyui/js/jquery.easyui.min.js"></script>
+
+    <link rel="shortcut icon" href="/favicon.png" />
 
 </head>
 <body class="easyui-layout">
 
-<div id="north-div" data-options="region:'north',border:true"
+<div id="north-div" data-options="region:'north',border:false"
      style="height:70px;padding:5px;width: 100%;
 	border: 1px solid #f40;">
     <div th:include="header::header"></div>
@@ -25,11 +27,11 @@
 
 
 <!--<div data-options="region:'north',split:true,border:false" style="height:60px;background:#B3DFDA;padding:10px">north region</div>-->
-<div data-options="region:'west',split:true,title:'West'" style="width:150px;padding:10px;">
+<div data-options="region:'west',split:true,border:false,title:''" style="width:150px;padding:10px;">
     <div class="easyui-accordion" data-options="fit:true,border:false">
         <div title="关键词云图" data-options="selected:false" style="padding:10px;">
             <div id="tag-cloud"></div>
-            <script type="text/javascript" src="js/jquery.svg3dtagcloud.min.js"></script>
+            <script type="text/javascript" src="/js/jquery.svg3dtagcloud.min.js"></script>
             <script type="text/javascript" th:inline="javascript">
                 var entries = [[${tagCloudEntrys}]];
                 var settings = {
@@ -73,7 +75,7 @@
             <!--Step:1 为ECharts准备一个具备大小（宽高）的Dom-->
             <div id="radar-graphic" style="width:500px;height:500px;border:1px solid #ccc;padding:10px;"></div>
             <!--Step:2 引入echarts.js-->
-            <script src="echart/js/echarts.js"></script>
+            <script src="/echart/js/echarts.js"></script>
             <!-- Step:3 为模块加载器配置echarts的路径，从当前页面链接到echarts.js，定义所需图表路径 -->
             <script type="text/javascript" th:inline="javascript">
                 /*<![CDATA[*/
@@ -146,8 +148,8 @@
     </div>
 </div>
 </div>
-<div data-options="region:'east',split:true,collapsed:true,title:'East'" style="width:100px;padding:10px;">east region</div>
-<div data-options="region:'south',border:true"
+<div data-options="region:'east',split:true,collapsed:true,border:false,title:''" style="width:100px;padding:10px;">east region</div>
+<div data-options="region:'south',border:false"
      style="
 			height:40px;
 			background:#f8f8f8;
@@ -155,7 +157,7 @@
 			padding-left: 30%">
     <div th:include="footer::footer"></div>
 </div>
-<div data-options="region:'center',title:'Center'">
+<div data-options="region:'center',border:false">
     <style>
         .blog-list{
             height: 100%;
@@ -320,7 +322,7 @@
             for(var i = 0; i < docs.content.length; i++){
                 var html = "<div class='blog-item'>" +
                     "<p class='blog-title'>" +
-                    "   <a href='"+docs.content[i].link+"' target='_blank'>"+docs.content[i].title+"</a>" +
+                    "   <a href='/blog/"+docs.content[i].link+"' target='_blank'>"+docs.content[i].title+"</a>" +
                     "</p>" +
                     "<p class='blog-keywords'>";
                 for (var j = 0; j < docs.content[i].keywords.length; j++){

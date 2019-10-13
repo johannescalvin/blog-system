@@ -2,6 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
+    <link rel="shortcut icon" href="/favicon.png" />
+
     <!-- blog metadata for seo-->
     <th:block th:each="metadata : ${metadatas}">
         <meta th:if="${metadata != null}" th:name="${metadata.getType()}" th:lang="${metadata.getSymbol()}" th:content="${metadata.getText()}" >
@@ -14,6 +16,7 @@
     <script src="/js/prism.js"></script>
 
     <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
+
 
     <script th:if="${languages.contains('seq') || languages.contains('sequence')}" src="https://bramp.github.io/js-sequence-diagrams/js/webfont.js"></script>
     <script th:if="${languages.contains('seq') || languages.contains('sequence')}" src="https://bramp.github.io/js-sequence-diagrams/js/snap.svg-min.js"></script>
@@ -79,7 +82,7 @@
     <div th:include="header::header"></div>
 </div>
 
-<div data-options="region:'south',border:true"
+<div data-options="region:'south',border:false"
      style="
 			height:40px;
 			background:#f8f8f8;
@@ -87,7 +90,17 @@
 			padding-left: 30%">
     <div th:include="footer::footer"></div>
 </div>
-<div data-options="region:'center',title:'Center'">
+
+<div data-options="region:'west',border:false"
+     style="background:#f8f8f8; width: 20%;">
+    west
+</div>
+<div data-options="region:'east',border:false"
+     style="background:#f8f8f8; width: 10%;">
+    east
+</div>
+
+<div data-options="region:'center',border:false">
 
 <p id="back-to-top"><a href="#top">返回顶部</a></p>
 

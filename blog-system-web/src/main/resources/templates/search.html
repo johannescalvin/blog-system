@@ -2,6 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <link rel="shortcut icon" href="/favicon.png" />
     <link rel="stylesheet" type="text/css" href="easyui/themes/bootstrap/easyui.css">
     <script src="easyui/js/jquery.min.js"></script>
     <script type="text/javascript" src="easyui/js/jquery.easyui.min.js"></script>
@@ -17,8 +18,22 @@
 
 </head>
 <body class="easyui-layout">
+<div data-options="region:'south'">
+    <div th:replace="footer::footer"></div>
+</div>
+<div data-options="region:'north'">
+    <div th:replace="header::header"></div>
+</div>
+<div data-options="region:'west',border:false"
+     style="background:#f8f8f8; width: 20%;">
+    west
+</div>
+<div data-options="region:'east',border:false"
+     style="background:#f8f8f8; width: 10%;">
+    east
+</div>
 
-<div data-options="region:'center',title:'Center'">
+<div data-options="region:'center'">
     <div id="tabs-wrapper-div" class="easyui-tabs" style="width:100%;height:100%">
         <div title="按相关性排序" style="padding:10px">
             <ul id="blog-list-with-score" class="blog-list">
@@ -63,6 +78,6 @@
         </script>
     </div>
 </div>
-<div th:include="footer::footer"></div>
+
 </body>
 </html>

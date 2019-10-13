@@ -34,7 +34,7 @@ public class MarkdownController {
     @Resource
     private IndexPageProps indexPageProps;
 
-    @GetMapping("/**/*.html")
+    @GetMapping("/blog/**/*.html")
     public String getBlog(HttpServletRequest request, Model model){
         String path = request.getRequestURI();
         try {
@@ -43,7 +43,7 @@ public class MarkdownController {
 
         }
 
-        String blogId = path.substring(1,path.toLowerCase().lastIndexOf(".html"));
+        String blogId = path.substring("/blog/".length(),path.toLowerCase().lastIndexOf(".html"));
         Node document  = markdownBlogService.parseMarkdown(blogId);
 
         LanguageVisitor visitor = new LanguageVisitor();

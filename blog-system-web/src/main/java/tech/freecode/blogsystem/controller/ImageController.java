@@ -14,11 +14,12 @@ public class ImageController {
     @Value("${blog-system.markdown-file-base}")
     private String basePath;
 
-    @GetMapping("/**/*.svg")
+    @GetMapping("/blog/**/*.svg")
     public void getSVG(HttpServletRequest request, HttpServletResponse response) {
         String path = request.getRequestURI();
         try {
             path = URLDecoder.decode(path, "UTF-8");
+            path = path.substring("/blog".length());
         } catch (UnsupportedEncodingException ex) {
 
         }
@@ -35,6 +36,7 @@ public class ImageController {
         String path = request.getRequestURI();
         try {
             path = URLDecoder.decode(path, "UTF-8");
+            path = path.substring("/blog".length());
         } catch (UnsupportedEncodingException ex) {
 
         }
