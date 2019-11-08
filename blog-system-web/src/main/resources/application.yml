@@ -48,7 +48,9 @@ blog-system:
 
 server:
    port: 8443
+
 http:
+  enabled: true
   port: 8080
 
 

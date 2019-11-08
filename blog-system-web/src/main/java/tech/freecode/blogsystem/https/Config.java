@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ConditionalOnProperty("http.port")
+@ConditionalOnProperty(name = "http.enabled",havingValue = "true")
 public class Config {
     @Value("${http.port}")
     private int httpPort;

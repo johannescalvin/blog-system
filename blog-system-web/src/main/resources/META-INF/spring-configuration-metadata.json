@@ -86,12 +86,19 @@
       "type": "java.lang.String",
       "defaultValue": "password"
     },
+    {
+      "name": "blog-system.markdown-file-watch-service.enabled",
+      "description": "whether to monitor changes of ${blog-system.markdown-file-base}",
+      "type": "java.lang.Boolean",
+      "defaultValue": true
+    },
 
     {
       "name": "http.port",
       "description": "when https is enabled,use this port to run http",
       "type": "java.lang.String"
     }
+
 
   ],
 
@@ -109,6 +116,17 @@
       "values": [
         {
           "value": "${HOME}/markdown-blog/"
+        }
+      ]
+    },
+    {
+      "name": "blog-system.markdown-file-watch-service.enabled",
+      "values": [
+        {
+          "value": true
+        },
+        {
+          "value": false
         }
       ]
     },
