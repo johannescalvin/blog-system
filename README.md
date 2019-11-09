@@ -1,9 +1,88 @@
 # blog-system
 
+一个可以使用markdown在本地写作，使用git上传的个人博客系统.
+
 ## 安装
 
-创建配置文件
-一个可以使用markdown在本地写作，使用git上传的个人博客系统
+### 假设
+
+1. 假设你有一台具备公网IP的Linux服务器
+2. 博客服务器的`HOME`目录下没有`markdown-blog.git`,`markdown-blog`以及`blog-site-map`这三个目录
+3. 博客服务器已经安装了JRE/JDK
+4. 博客服务器已经安装了Git
+5. 你在服务器上运行了`ElasticSearch`服务，其`cluster-name`为`elasticsearch`,访问地址为`127.0.0.1:9200`(HTTP)和`127.0.0.1:9300`(TCP)
+6. 你的本地机器上也安装了Git
+
+### 设置Git Repository
+
+```shell
+# 进入一个有限读写的地方
+cd ~
+# 如果你不想费事修改配置
+git --bare init markdown-blog.git
+git clone "${USER}"@localhost:"${HOME}"/markdown-blog.git
+cd markdown-blog.git/hooks
+cp post-update.sample post-update
+```
+
+然后编辑`post-update`
+
+```shell
+#!/bin/sh
+unset GIT_DIR
+cd ~/markdown-blog
+branch=`git branch | awk '{print $2}'`
+if [ ! $branch == 'master' ];then
+    echo '切换至master分支'
+    git checkout master
+    if [ $? -ne 0 ];then
+        echo '切换至master分支失败'
+        exit 1;
+    fi
+fi
+
+git  pull origin master
+```
+
+### 设置本地客户端
+
+在本地机器上克隆linux服务器的博客项目
+
+```shell
+git clone 服务器用户名@服务器域名或者公网IP:服务器HOME目录/markdown-blog.git
+```
+
+### 创建配置文件
+
+创建`application-production.properties`文件，必须包含的配置项有
+
+```shell
+# 系统管理员账号和密码
+# 强烈建议修改，否则将有安全隐患！
+blog-system.blog-document-crud-admin.user-name=user
+blog-system.blog-document-crud-admin.user-password=password
+
+# 必须设置的前端展示项
+# 否则采用默认值，需要博客系统可以运行
+# 但是会展示无意义的信息
+
+# 网站首页标题
+blog-system.index-page.display-title=
+# 网站首页meta标签中的中文关键词
+blog-system.index-page.seo-keywords-zh=
+# 网站首页meta标签中的英文关键词
+blog-system.index-page.seo-keywords-en=
+# 网站用途描述
+blog-system.index-page.seo-descriptions=
+# 网站公开域名必须展示的备案号
+blog-system.index-page.recode-code=
+# 联系方式信息
+blog-system.index-page.contact=
+```
+
+```shell
+java -jar -Dspring.config.location=D:\config\config.properties springbootrestdemo-0.0.1-SNAPSHOT.jar
+```
 
 ```shell
 docker run -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:6.2.2
@@ -84,10 +163,11 @@ sequenceDiagram
 
 ### 插入甘特图
 
+<pre>
 ```mermaid
 gantt
 dateFormat  YYYY-MM-DD
-title Adding GANTT diagram to mermaid
+title ADD GANTT diagram to mermaid
 excludes weekdays 2014-01-10
 
 section A section
@@ -96,6 +176,11 @@ Active task               :active,  des2, 2014-01-09, 3d
 Future task               :         des3, after des2, 5d
 Future task2               :         des4, after des3, 5d
 ```
+</pre>
+
+将自动识别，并渲染为
+
+![mermaid-gantt.png](images/mermaid-gantt.png)
 
 ### 插入流程图
 
@@ -125,7 +210,7 @@ graph TB
 
 ### 插入UML类图
 
-系统使用mermaid自动检测并渲染UML类图，在markdown文件中插入附合[语法](https://mermaidjs.github.io/#/classDiagram)的片段
+系统使用mermaid自动检测并渲染UML类图，在markdown文件中插入符合[语法](https://mermaidjs.github.io/#/classDiagram)的片段
 
 <pre>
 ```mermaid
@@ -157,4 +242,58 @@ classDiagram
 
 ![mermaid-uml.png](images/mermaid-uml.png)
 
-### 插入
+### 插入状态图
+
+在markdown文件中插入符合[状态图语法](https://mermaidjs.github.io/#/stateDiagram)的片段
+
+<pre>
+```mermaid
+stateDiagram
+    [*] --> First
+    First --> Second
+    First --> Third
+
+    state First {
+        [*] --> fir
+        fir --> [*]
+    }
+    state Second {
+        [*] --> sec
+        sec --> [*]
+    }
+    state Third {
+        [*] --> thi
+        thi --> [*]
+    }
+```
+</pre>
+
+将会被自动识别并渲染为
+
+![mermaid-state-diagram.png](images/mermaid-state-diagram.png)
+
+### 插入饼图
+
+在markdown文件中插入符合[语法](https://mermaidjs.github.io/#/pie?id=syntax)的代码片段
+
+<pre>
+```mermaid
+pie
+    "Dogs" : 386
+    "Cats" : 85
+    "Rats" : 15
+```
+</pre>
+
+将自动识别被渲染为饼图
+![mermaid-pie.png](images/mermaid-pie.png)
+
+### 插入思维导图
+
+#### 使用百度脑图
+
+百度脑图是个相当完善的思维导图生成工具，并且在线分享。为保持markdown文件的简洁，直接使用百度脑图，编辑，并在`我的文档->需要分享的脑图->选项->分享设置->复制链接`，然后在markdown文件中插入
+
+```text
+[思维导图](百度脑图的分享链接)
+```
