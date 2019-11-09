@@ -13,7 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
-@ConditionalOnProperty(name = "blog-system.markdown-file-watch-service.enabled",havingValue = "false")
+//@ConditionalOnProperty(name = "blog-system.markdown-file-watch-service.enabled",havingValue = "false")
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -22,9 +22,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
             .authorizeRequests()
-                .antMatchers("/*").permitAll()
-            .and().httpBasic()
-        .and().csrf().ignoringAntMatchers("/**/*.md");
+                .antMatchers("/*").permitAll();
+//            .and().httpBasic()
+//        .and().csrf().ignoringAntMatchers("/**/*.md");
 
     }
 
