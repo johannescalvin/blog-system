@@ -123,7 +123,7 @@ import java.util.stream.Collectors;
 @Configuration
 @EnableScheduling
 @ConditionalOnProperty(name = "blog-system.link-accessibility-validator.enabled",havingValue = "true")
-public class UrlAccessabilityValidationTask {
+public class UrlAccessibilityValidationTask {
 
     @Value("${blog-system.markdown-file-base}")
     private String fileBase;
@@ -131,15 +131,8 @@ public class UrlAccessabilityValidationTask {
     @Resource
     private LinkAccessibilityService linkAccessibilityService;
 
-    @Scheduled(fixedRate = 1000 * 60  )
-    @Profile("develop")
+    @Scheduled(cron="${blog-system.link-accessibility-validator.cron}")
     public void doTask(){
-        task();
-    }
-
-    @Scheduled(fixedRate = 1000 * 60 * 60 * 24 )
-    @Profile("production")
-    public void doTask2(){
         task();
     }
 

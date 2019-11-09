@@ -1,10 +1,12 @@
 package tech.freecode.blogsystem.service;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 @Service
+@ConditionalOnProperty(name = "blog-system.link-accessibility-validator.enabled",havingValue = "true")
 public class LinkAccessibilityService {
 
     public static class AccessibilityFailReport {

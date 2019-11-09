@@ -24,7 +24,10 @@ public class SiteMapGenerateTask {
     @Value("${blog-system.markdown-file-base}")
     private String markdownFileDir;
 
-    @Scheduled(fixedRate = 1000 * 60 * 60 * 24 )
+    @Value("${blog-system.seo.site-map.server-url}")
+    private String blogServerUrl;
+
+    @Scheduled(cron = "${blog-system.seo.site-map.cron}" )
     public void task() throws IOException {
         File storeFile = new File(storeDir);
         if (!storeFile.exists()) {
@@ -34,9 +37,7 @@ public class SiteMapGenerateTask {
         dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
 
         WebSitemapGenerator wsg = WebSitemapGenerator
-                .builder("http://www.blog.freecode.tech", storeFile)
-//                .gzip(true)
-//                .fileNamePrefix("blog")
+                .builder(blogServerUrl+"/blog", storeFile)
                 .dateFormat(dateFormat)
                 .build();
 
@@ -44,7 +45,7 @@ public class SiteMapGenerateTask {
         for (File markdownFile : files){
             String path = markdownFile.getAbsolutePath().substring(markdownFileDir.length());
             WebSitemapUrl url = new WebSitemapUrl
-                    .Options("http://www.blog.freecode.tech/"+path)
+                    .Options(blogServerUrl+"/blog/"+path)
                     .lastMod(new Date(markdownFile.lastModified()))
 //                    .priority(1.0)
 //                    .changeFreq(ChangeFreq.WEEKLY)

@@ -1,6 +1,5 @@
 package tech.freecode.blogsystem.cache;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.cache.JCacheManagerCustomizer;
 import org.springframework.stereotype.Component;
 

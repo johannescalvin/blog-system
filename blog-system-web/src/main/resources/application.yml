@@ -27,6 +27,7 @@ blog-system:
     enabled: true
   link-accessibility-validator:
     enabled: false
+    cron: "0 0 0 * * ?"
   index-page:
     seo-keywords-zh: "个人博客,技术博客,博客系统,markdown博客"
     seo-keywords-en: "IT Blog,Blog System"
@@ -44,6 +45,8 @@ blog-system:
   seo:
     site-map:
       store-dir: ${HOME}/blog-site-map/
+      cron: "0 0 0 * * ?"
+      server-url: http://localhost:8080
   blog-document-crud-admin:
     user-name: admin
     user-password: password
@@ -57,10 +60,11 @@ server:
      key-store-password: 123456
      key-store: classpath:keystore.p12
      key-store-type: JKS
-     enabled: true
+     enabled: false
 
 http:
-  enabled: true
+  with-https:
+    enabled: false
   port: 8080
 
 

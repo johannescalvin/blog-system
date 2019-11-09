@@ -22,9 +22,16 @@
 
     {
       "name": "blog-system.link-accessibility-validator.enabled",
-      "description": "detect invalid link url (both interanl and external) periodically.",
+      "description": "detect invalid link url (both internal and external) periodically.",
       "type": "java.lang.Boolean",
       "defaultValue": true
+
+    },
+    {
+      "name": "blog-system.link-accessibility-validator.cron",
+      "description": "Schedule to invalid link url (both internal and external) periodically.",
+      "type": "java.lang.String",
+      "defaultValue": "0 0 0 * * ?"
 
     },
     {
@@ -75,6 +82,18 @@
 
     },
     {
+      "name": "blog-system.seo.site-map.server-url",
+      "description": "",
+      "type": "java.lang.String",
+      "defaultValue": "http://localhost:8080"
+    },
+    {
+      "name": "blog-system.seo.site-map.cron",
+      "description": "schedule (time and frequency) to update site map",
+      "type": "java.lang.String",
+      "defaultValue": "0 0 0 * * ?"
+    },
+    {
       "name": "blog-system.blog-document-crud-admin.user-name",
       "description": "user name who have permission to do crud operations.",
       "type": "java.lang.String",
@@ -97,6 +116,13 @@
       "name": "http.port",
       "description": "when https is enabled,use this port to run http",
       "type": "java.lang.String"
+    },
+
+    {
+      "name": "http.with-https.enabled",
+      "description": "when https is enabled,whether to run http meanwhile",
+      "type": "java.lang.Boolean",
+      "defaultValue": true
     }
 
 
@@ -134,7 +160,7 @@
       "name": "blog-system.page-view-times.sync-duration-seconds-threshold",
       "values": [
         {
-          "value": 30,
+          "value": 60,
           "description": "one minute"
         },
 
@@ -149,6 +175,29 @@
         {
           "value": 86400,
           "description": "one day"
+        }
+      ]
+    },
+    {
+      "name": "http.with-https.enabled",
+      "values": [
+        {
+          "value": true
+        },
+        {
+          "value": false
+        }
+      ]
+    },
+
+    {
+      "name": "blog-system.link-accessibility-validator.enabled",
+      "values": [
+        {
+          "value": true
+        },
+        {
+          "value": false
         }
       ]
     }
