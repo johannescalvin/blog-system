@@ -1,58 +1,9 @@
-# blog-system
 
-一个可以使用markdown在本地写作，使用git上传的个人博客系统.
+# 基于Markdown的个人博客系统
 
-## 安装
+## [Get Started](#get-started.md)
 
-### 假设
-
-1. 假设你有一台具备公网IP的Linux服务器
-2. 博客服务器的`HOME`目录下没有`markdown-blog.git`,`markdown-blog`以及`blog-site-map`这三个目录
-3. 博客服务器已经安装了JRE/JDK
-4. 博客服务器已经安装了Git
-5. 你在服务器上运行了`ElasticSearch`服务，其`cluster-name`为`elasticsearch`,访问地址为`127.0.0.1:9200`(HTTP)和`127.0.0.1:9300`(TCP)
-6. 你的本地机器上也安装了Git
-
-### 设置Git Repository
-
-```shell
-# 进入一个有限读写的地方
-cd ~
-# 如果你不想费事修改配置
-git --bare init markdown-blog.git
-git clone "${USER}"@localhost:"${HOME}"/markdown-blog.git
-cd markdown-blog.git/hooks
-cp post-update.sample post-update
-```
-
-然后编辑`post-update`
-
-```shell
-#!/bin/sh
-unset GIT_DIR
-cd ~/markdown-blog
-branch=`git branch | awk '{print $2}'`
-if [ ! $branch == 'master' ];then
-    echo '切换至master分支'
-    git checkout master
-    if [ $? -ne 0 ];then
-        echo '切换至master分支失败'
-        exit 1;
-    fi
-fi
-
-git  pull origin master
-```
-
-### 设置本地客户端
-
-在本地机器上克隆linux服务器的博客项目
-
-```shell
-git clone 服务器用户名@服务器域名或者公网IP:服务器HOME目录/markdown-blog.git
-```
-
-### 创建配置文件
+## 创建配置文件
 
 创建`application-production.properties`文件，必须包含的配置项有
 

@@ -1,0 +1,8 @@
+name=Neo4j Yum Repo
+baseurl=http://yum.neo4j.org/stable
+enabled=1
+gpgcheck=1
+name=Neo4j Yum Repo
+baseurl=http://yum.neo4j.org/stable
+enabled=1
+gpgcheck=1
