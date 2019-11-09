@@ -1,7 +1,7 @@
 
 # 基于Markdown的个人博客系统
 
-## [Get Started](#get-started.md)
+## [Get Started](get-started.md)
 
 ## 创建配置文件
 
