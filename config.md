@@ -2,6 +2,10 @@
 
 为了便于不使用IDE的用户查看和编辑，使用`.properties`文件，而不使用`.yaml`。如有需要，请自行转换。
 
+```shell
+java -jar -Dspring.config.location=D:\config\config.properties springbootrestdemo-0.0.1-SNAPSHOT.jar
+```
+
 ## 必须包含的配置项
 
 ```shell
@@ -89,18 +93,6 @@ spring.data.elasticsearch.cluster-nodes=
 ```
 
 **注意** 一定不要在公网环境下暴露自己无密码保护的Elasticsearch实例。
-
-```shell
-java -jar -Dspring.config.location=D:\config\config.properties springbootrestdemo-0.0.1-SNAPSHOT.jar
-```
-
-```shell
-docker run -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:6.2.2
-```
-
-```shell
-keytool -genkey -alias tomcat -dname "CN=Andy,OU=kfit,O=kfit,L=HaiDian,ST=BeiJing,C=CN" -storetype PKCS12 -keyalg RSA -keysize 2048 -keystore keystore.p12 -validity 365 -keypass 123456 -storepass 123456
-```
 
 ## FileWatch Service
 
