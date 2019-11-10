@@ -30,6 +30,10 @@ blog-system.index-page.seo-descriptions=
 blog-system.index-page.recode-code=
 # 联系方式信息
 blog-system.index-page.contact=
+
+# 网站地图
+# 博客地址
+blog-system.seo.site-map.server-url=
 ```
 
 ## markdown-blog位置设置

@@ -30,8 +30,7 @@
     {
       "name": "blog-system.link-accessibility-validator.cron",
       "description": "Schedule to invalid link url (both internal and external) periodically.",
-      "type": "java.lang.String",
-      "defaultValue": "0 0 0 * * ?"
+      "type": "java.lang.String"
 
     },
     {
@@ -65,7 +64,7 @@
     },
     {
       "name": "blog-system.index-page.contact",
-      "description": "contact infomation",
+      "description": "contact information",
       "type": "java.lang.String",
       "defaultValue": "contact us ..."
     },
@@ -90,8 +89,7 @@
     {
       "name": "blog-system.seo.site-map.cron",
       "description": "schedule (time and frequency) to update site map",
-      "type": "java.lang.String",
-      "defaultValue": "0 0 0 * * ?"
+      "type": "java.lang.String"
     },
     {
       "name": "blog-system.blog-document-crud-admin.user-name",
@@ -135,6 +133,11 @@
         {
           "value": "${HOME}/blog-site-map/"
         }
+      ],
+      "providers": [
+        {
+          "name": "any"
+        }
       ]
     },
     {
@@ -142,6 +145,11 @@
       "values": [
         {
           "value": "${HOME}/markdown-blog/"
+        }
+      ],
+      "providers": [
+        {
+          "name": "any"
         }
       ]
     },
@@ -176,6 +184,11 @@
           "value": 86400,
           "description": "one day"
         }
+      ],
+      "providers": [
+        {
+          "name": "any"
+        }
       ]
     },
     {
@@ -198,6 +211,52 @@
         },
         {
           "value": false
+        }
+      ]
+    },
+
+    {
+      "name": "blog-system.seo.site-map.cron",
+      "values": [
+        {
+          "value": "\"0 0 0 * * ?\"",
+          "description": "run at the midnight every day"
+        },
+        {
+          "value": "\"0 0 0 ? * 2\"",
+          "description": "run at the midnight on Monday weekly"
+        },
+        {
+          "value": "\"0 0 0 L * ?\"",
+          "description": "run at the midnight of the last day in every month"
+        }
+      ],
+      "providers": [
+        {
+          "name": "any"
+        }
+      ]
+    },
+
+    {
+      "name": "blog-system.link-accessibility-validator.cron",
+      "values": [
+        {
+          "value": "\"0 0 0 * * ?\"",
+          "description": "run at the midnight every day"
+        },
+        {
+          "value": "\"0 0 0 ? * 2\"",
+          "description": "run at the midnight on Monday weekly"
+        },
+        {
+          "value": "\"0 0 0 L * ?\"",
+          "description": "run at the midnight of the last day in every month"
+        }
+      ],
+      "providers": [
+        {
+          "name": "any"
         }
       ]
     }

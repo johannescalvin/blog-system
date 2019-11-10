@@ -26,7 +26,7 @@ blog-system:
   markdown-file-watch-service:
     enabled: true
   link-accessibility-validator:
-    enabled: false
+    enabled: true
     cron: "0 0 0 * * ?"
   index-page:
     seo-keywords-zh: "个人博客,技术博客,博客系统,markdown博客"
@@ -40,13 +40,13 @@ blog-system:
     contact: "电话 / 邮箱"
 
   page-view-times:
-    sync-duration-seconds-threshold: 20000
+    sync-duration-seconds-threshold: 3600
 
   seo:
     site-map:
       store-dir: ${HOME}/blog-site-map/
-      cron: "0 0 0 * * ?"
       server-url: http://localhost:8080
+      cron: "0 0 0 * * ?"
   blog-document-crud-admin:
     user-name: admin
     user-password: password
