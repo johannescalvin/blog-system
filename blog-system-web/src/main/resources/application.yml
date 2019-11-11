@@ -65,8 +65,7 @@ server:
 http:
   with-https:
     enabled: true
-  port: 8080f
-    enabled: true
+  port: 8080
   force-redirect-to-https:
     enabled: true
 

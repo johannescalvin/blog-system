@@ -15,7 +15,8 @@
     <link href="/themes/prism.css" rel="stylesheet" />
     <script src="/js/prism.js"></script>
 
-    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <!--<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>-->
 
 
     <script th:if="${languages.contains('seq') || languages.contains('sequence')}" src="https://bramp.github.io/js-sequence-diagrams/js/webfont.js"></script>
@@ -23,7 +24,12 @@
     <script th:if="${languages.contains('seq') || languages.contains('sequence')}" src="https://bramp.github.io/js-sequence-diagrams/js/underscore-min.js"></script>
     <script th:if="${languages.contains('seq') || languages.contains('sequence')}" src="https://bramp.github.io/js-sequence-diagrams/js/sequence-diagram-min.js"></script>
 
-    </div>
+    <!--<script th:if="${languages.contains('flowchart')}" src="https://raw.githubusercontent.com/DmitryBaranovskiy/raphael/master/raphael.min.js"></script>-->
+    <!--<script th:if="${languages.contains('flowchart')}" src="https://flowchart.js.org/flowchart-latest.js"></script>-->
+
+    <script th:if="${languages.contains('flowchart')}" src="/flowchart/raphael-min.js"></script>
+    <script th:if="${languages.contains('flowchart')}" src="/flowchart/flowchart-latest.js"></script>
+
     <script>
         $(document).ready(function(e) {
             $(".catalog li").click(function(e) {
@@ -143,7 +149,7 @@
                 var text = code.textContent;
                 var div = document.createElement("div");
                 div.setAttribute("id","latex-diagram"+i);
-                div.textContent = "latex-testing!";
+                div.textContent = code.textContent;
                 toolbar.appendChild(div);
 
                 katex = window.katex;
@@ -177,6 +183,69 @@
         mermaid.initialize({startOnLoad:true});
     });
 </script>
+
+    <script th:if="${languages.contains('flowchart')}">
+        $(document).ready(function () {
+            var toolbars = document.getElementsByClassName("code-toolbar");
+            for (i=0; i<toolbars.length; i++){
+                var toolbar = toolbars[i];
+                var code = toolbar.querySelector("code");
+                if (code.getAttribute("class") == " language-flowchart"){
+                    var text = code.textContent;
+                    var div = document.createElement("div");
+                    div.setAttribute("id","flowchart-canvas-"+i);
+                    div.setAttribute("class","flowchart");
+                    // div.textContent = text;
+
+                    toolbar.appendChild(div);
+
+                    var chart = flowchart.parse(text);
+                    var options = {
+                        // 'x': 0,
+                        // 'y': 0,
+                        'line-width': 3,
+                        'line-length': 50,
+                        'text-margin': 10,
+                        'font-size': 14,
+                        'font-color': 'black',
+                        'line-color': 'black',
+                        'element-color': 'black',
+                        'fill': 'white',
+                        'yes-text': 'yes',
+                        'no-text': 'no',
+                        'arrow-end': 'block',
+                        'scale': 1,
+                        // style symbol types
+                        'symbols': {
+                            'start': {
+                                'font-color': 'red',
+                                'element-color': 'green',
+                                'fill': 'yellow'
+                            },
+                            'end':{
+                                'class': 'end-element'
+                            }
+                        },
+                        // even flowstate support ;-)
+                        'flowstate' : {
+                            'past' : { 'fill' : '#CCCCCC', 'font-size' : 12},
+                            'current' : {'fill' : 'yellow', 'font-color' : 'red', 'font-weight' : 'bold'},
+                            'future' : { 'fill' : '#FFFF99'},
+                            'request' : { 'fill' : 'blue'},
+                            'invalid': {'fill' : '#444444'},
+                            'approved' : { 'fill' : '#58C4A3', 'font-size' : 12, 'yes-text' : 'APPROVED', 'no-text' : 'n/a' },
+                            'rejected' : { 'fill' : '#C45879', 'font-size' : 12, 'yes-text' : 'n/a', 'no-text' : 'REJECTED' }
+                        }
+                    };
+                    chart.drawSVG("flowchart-canvas-"+i,options);
+
+                }
+            }
+
+
+        });
+    </script>
 </div>
+
 </body>
 </html>
