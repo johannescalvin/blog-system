@@ -48,17 +48,13 @@ blog-system.markdown-file-base=
 
 ## 配置端口
 
-系统默认开启`HTTPS`和`HTTP`协议，分别运行在`8443`和`8080`端口。原因还是`HTTPS`证书有点贵，自己生成的证书又会被浏览器标注为不安全。
-
-### 只开启HTTP端口
-
-```shell
-server.port=
-server.ssl.enabled=false
-http.with-https.enabled=false
-```
-
 ### 同时开启HTTP和HTTPS端口
+
+系统默认开启`HTTPS`和`HTTP`协议，分别运行在`8443`和`8080`端口。主要是用户习惯不输入`https://`,所以系统强制将`HTTP`的访问重定向至`HTTPS`。
+
+同时开启`HTTP`和`HTTPS`将消耗一定的服务器资源。同时，在没有`HTTPS`证书的情况下，强制使用`HTTPS`访问，浏览器会阻止第一次访问的用户，总是感觉少了点意思。如果希望访问者能有更好的体验，最好去申请一起免费的`HTTPS`证书（土豪随意）。
+
+相关配置如下
 
 ```shell
 server.port=
@@ -81,10 +77,44 @@ keytool -genkey -alias tomcat -dname "CN=Andy,OU=kfit,O=kfit,L=HaiDian,ST=BeiJin
 
 注意指定`-keypass`和`-storepass`的值，并分别设置到配置项`server.ssl.key-password`和`server.ssl.key-store-password`中。
 
-### 强制HTTP转发至HTTPS
+### 不强制使用HTTPS
 
 ```shell
-# 待续
+http.force-redirect-to-https.enabled=false
+```
+
+此时，用户通过`HTTP`和`HTTPS`都能访问我们的网站。但由于不会强制用户使用`HTTPS`，所以即使在你没有`HTTPS`证书的情况下，用户通过`HTTP`的访问请求，浏览器不会阻止。
+
+如果在安全要求比较高的场景中，这么干是不合适，好想对于我们的个人博客来讲，如果没有设置`blog-system.markdown-file-watch-service.enabled=false`,全站只有`GET`请求，好像也没啥影响。
+
+### 只开启HTTPS端口
+
+如果想用户只能需要`HTTPS`访问你的博客，那么你可以关闭`HTTP`端口。
+
+```shell
+# HTTPS相关设置
+server.port=
+server.ssl.enabled=true
+server.ssl.key-alias=tomcat
+server.ssl.key-password=
+server.ssl.key-store-type=JKS
+server.ssl.key-store=classpath:keystore.p12
+server.ssl.key-store-password=
+
+# 关闭HTTP端口
+http.with-https.enabled=false
+```
+
+**注意**，用户都是懒的，在浏览器输入地址不太可能带协议。如果不想用户在浏览器地址栏键入http地址时报错，那么你需要一个`Nginx`反向代理，在其中实现`HTTP`至`HTTPS`的强制调转。具体方法可以参见[nginx强制使用https访问](https://blog.csdn.net/wzy_1988/article/details/8549290)。
+
+### 只开启HTTP端口
+
+如果你不想开启`HTTPS`，或者，如果你的博客服务运行在开启了`HTTPS`支持的`Nginx`反向代理之后，那么可以只开启HTTP端口。
+
+```shell
+server.port=
+server.ssl.enabled=false
+http.with-https.enabled=false
 ```
 
 ## 配置Elasticsearch
