@@ -18,6 +18,8 @@ public class Config {
     private int httpPort;
     @Value("${server.port}")
     private int httpsPort;
+    @Value("${http.force-redirect-to-https.enabled}")
+    private boolean redirectEnabled;
 
     @Bean
     @ConditionalOnProperty(name = "server.ssl.enabled",havingValue = "true")
@@ -42,7 +44,9 @@ public class Config {
     private Connector createStandardConnector() {
         Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");
         connector.setPort(httpPort);
-        connector.setRedirectPort(httpsPort);
+        if (redirectEnabled){
+            connector.setRedirectPort(httpsPort);
+        }
         return connector;
     }
 }

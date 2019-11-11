@@ -9,6 +9,10 @@
       "description": "information which will be displayed in the welcome page.",
       "sourceType": "tech.freecode.blogsystem.config.IndexPageProps",
       "type": "tech.freecode.blogsystem.config.IndexPageProps"
+    },
+    {
+      "name": "http",
+      "description": "http configuration when server.ssl.enabled=true"
     }
   ],
 
@@ -121,6 +125,13 @@
       "description": "when https is enabled,whether to run http meanwhile",
       "type": "java.lang.Boolean",
       "defaultValue": true
+    },
+
+    {
+      "name": "http.force-redirect-to-https.enabled",
+      "type": "java.lang.Boolean",
+      "description": "when https is enabled,whether to redirect http request to https port",
+      "defaultValue": true
     }
 
 
@@ -193,6 +204,18 @@
     },
     {
       "name": "http.with-https.enabled",
+      "values": [
+        {
+          "value": true
+        },
+        {
+          "value": false
+        }
+      ]
+    },
+
+    {
+      "name": "http.force-redirect-to-https.enabled",
       "values": [
         {
           "value": true
