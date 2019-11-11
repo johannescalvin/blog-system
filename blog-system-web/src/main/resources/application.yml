@@ -60,11 +60,11 @@ server:
      key-store-password: 123456
      key-store: classpath:keystore.p12
      key-store-type: JKS
-     enabled: false
+     enabled: true
 
 http:
   with-https:
-    enabled: false
+    enabled: true
   port: 8080
 
 

@@ -16,6 +16,9 @@ import org.springframework.context.annotation.Configuration;
 public class Config {
     @Value("${http.port}")
     private int httpPort;
+    @Value("${server.port}")
+    private int httpsPort;
+
     @Bean
     @ConditionalOnProperty(name = "server.ssl.enabled",havingValue = "true")
     public ServletWebServerFactory servletContainer() {
@@ -25,7 +28,7 @@ public class Config {
                 SecurityConstraint constraint = new SecurityConstraint();
                 constraint.setUserConstraint("CONFIDENTIAL");
                 SecurityCollection collection = new SecurityCollection();
-                collection.addPattern("/person/*");
+                collection.addPattern("/*");
                 constraint.addCollection(collection);
                 context.addConstraint(constraint);
             }
@@ -39,6 +42,7 @@ public class Config {
     private Connector createStandardConnector() {
         Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");
         connector.setPort(httpPort);
+        connector.setRedirectPort(httpsPort);
         return connector;
     }
 }
