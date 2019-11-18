@@ -203,3 +203,28 @@ pie
 ```text
 [思维导图](百度脑图的分享链接)
 ```
+
+### 使用plantUML
+
+<pre>
+```plantuml
+@startmindmap
+* Debian
+** Ubuntu
+*** Linux Mint
+*** Kubuntu
+*** Lubuntu
+*** KDE Neon
+** LMDE
+** SolydXK
+** SteamOS
+** Raspbian with a very long name
+*** <s>Raspmbc</s> => OSMC
+*** <s>Raspyfi</s> => Volumio
+@endmindmap
+```
+</pre>
+
+自动检测并渲染
+
+![mindmap.png](images/plantuml-mindmap.png)
