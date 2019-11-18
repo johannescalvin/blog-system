@@ -17,7 +17,7 @@
 
 ## 插入序列图
 
-插入序列图有两种方式，第一种使用[js-sequence-diagrams](https://bramp.github.io/js-sequence-diagrams/)自动检测并渲染序列图
+插入序列图有多种方式，第一种使用[js-sequence-diagrams](https://bramp.github.io/js-sequence-diagrams/)自动检测并渲染序列图
 
 <pre>
 ```sequence
@@ -40,6 +40,8 @@
 以上两种方式插入的代码片段均会被渲染为
 
 ![seq.png](images/seq.png)
+
+### 使用Mermaid
 
 另一种是使用[mermaid](https://mermaidjs.github.io)自动检测和渲染序列图。
 
@@ -67,7 +69,36 @@ sequenceDiagram
 
 具体语法可参见[官方文档](https://mermaidjs.github.io/#/sequenceDiagram?id=syntax)
 
+### 使用PlantUML语法
+
+可以使用`PlantUML`创建流程图，具体语法参见[文档](http://plantuml.com/zh/sequence-diagram)
+
+<pre>
+```plantuml
+@startuml
+actor Bob #red
+' The only difference between actor
+'and participant is the drawing
+participant Alice
+participant "I have a really\nlong name" as L #99FF99
+/' You can also declare:
+   participant L as "I have a really\nlong name"  #99FF99
+  '/
+
+Alice->Bob: Authentication Request
+Bob->Alice: Authentication Response
+Bob->L: Log transaction
+@enduml
+```
+</pre>
+
+将被自动识别并渲染为
+
+![plantuml-sequence.png](images/plantuml-sequence.png)
+
 ## 插入甘特图
+
+### 使用Mermaid
 
 <pre>
 ```mermaid
@@ -87,6 +118,33 @@ Future task2               :         des4, after des3, 5d
 将自动识别，并渲染为
 
 ![mermaid-gantt.png](images/mermaid-gantt.png)
+
+### 使用PalntUML
+
+系统可以使用`PlantUML`来画甘特图，根据[教程](http://plantuml.com/zh/gantt-diagram)来看，`PlantUML`还是能够满足比较精细的甘特图要求的。
+
+使用下面的代码片段
+
+<pre>
+```plantuml
+@startgantt
+project starts the 2018/04/09
+saturday are closed
+sunday are closed
+2018/05/01 is closed
+2018/04/17 to 2018/04/19 is closed
+[Prototype design] lasts 14 days
+[Test prototype] lasts 4 days
+[Test prototype] starts at [Prototype design]'s end
+[Prototype design] is colored in Fuchsia/FireBrick 
+[Test prototype] is colored in GreenYellow/Green 
+@endgantt
+```
+</pre>
+
+将被自动检测到并被渲染为
+
+![plantuml-gantt](images/plantuml-gantt.png)
 
 ## 插入流程图
 
@@ -115,6 +173,8 @@ graph TB
 ![mermaid-flowchart.png](images/mermaid-flowchart.png)
 
 ## 插入UML类图
+
+### 使用类图
 
 系统使用mermaid自动检测并渲染UML类图，在markdown文件中插入符合[语法](https://mermaidjs.github.io/#/classDiagram)的片段
 
@@ -148,7 +208,30 @@ classDiagram
 
 ![mermaid-uml.png](images/mermaid-uml.png)
 
+### 使用PantUML
+
+具体语法参见[文档](http://plantuml.com/zh/class-diagram)
+
+<pre>
+```plantuml
+@startuml
+class Car
+
+Driver - Car : drives >
+Car *- Wheel : have 4 >
+Car -- Person : < owns
+
+@enduml
+```
+</pre>
+
+将自动被识别，并渲染为
+
+![plantuml-class-uml.png](images/plantuml-class-uml.png)
+
 ## 插入状态图
+
+### 使用Mermaid
 
 在markdown文件中插入符合[状态图语法](https://mermaidjs.github.io/#/stateDiagram)的片段
 
@@ -178,11 +261,51 @@ stateDiagram
 
 ![mermaid-state-diagram.png](images/mermaid-state-diagram.png)
 
+### 使用PlantUML
+
+可以使用`PlantUML`插入状态图，具体语法参见[文档](http://plantuml.com/zh/state-diagram)。
+
+举个例子，下面的代码片段
+
+<pre>
+```plantuml
+@startuml
+skinparam backgroundColor LightYellow
+skinparam state {
+  StartColor MediumBlue
+  EndColor Red
+  BackgroundColor Peru
+  BackgroundColor<<Warning>> Olive
+  BorderColor Gray
+  FontName Impact
+}
+
+[*] --> NotShooting
+
+NotShooting --> [*]
+@enduml
+```state "Idle mode" as Idle <<Warning>>
+  state "Configuring mode" as Configuring
+  [*] --> Idle
+  Idle --> Configuring : EvConfig
+  Configuring --> Idle : EvConfig
+}
+
+NotShooting --> [*]
+@enduml
+```
+</pre>
+
+将自动识别并渲染为
+
+![plantuml-state-diagram.png](images/plantuml-state-diagram.png)
+
 ## 插入饼图
 
 在markdown文件中插入符合[语法](https://mermaidjs.github.io/#/pie?id=syntax)的代码片段
 
 <pre>
+
 ```mermaid
 pie
     "Dogs" : 386
@@ -228,3 +351,4 @@ pie
 自动检测并渲染
 
 ![mindmap.png](images/plantuml-mindmap.png)
+
