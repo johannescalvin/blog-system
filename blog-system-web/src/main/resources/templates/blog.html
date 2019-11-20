@@ -250,42 +250,47 @@
     <script th:if="${languages.contains('plantuml')}" type="text/javascript" src="/plantuml/jquery_plantuml.js" ></script>
     <script th:if="${languages.contains('plantuml')}">
     $(document).ready(function () {
+
         var toolbars = document.getElementsByClassName("code-toolbar");
         for (i = 0; i < toolbars.length; i++) {
             var toolbar = toolbars[i];
             var code = toolbar.querySelector("code");
             if (code.getAttribute("class") == " language-plantuml") {
-                var text = code.textContent;
-                var div = document.createElement("div");
-                div.setAttribute("id", "plantuml-canvas-" + i);
-                div.setAttribute("class", "plantuml-canvas");
-                text = unescape(encodeURIComponent(text));
+                var tabs_wrapper = document.createElement("div");
+                tabs_wrapper.setAttribute("id","tabs-wrapper-"+i);
+                var tabs_with_img = document.createElement("div");
+                tabs_with_img.setAttribute("title","展示图像");
+                var tabs_with_code = document.createElement("div");
+                tabs_with_code.setAttribute("title","展示代码");
+                tabs_wrapper.appendChild(tabs_with_img);
+                tabs_wrapper.appendChild(tabs_with_code);
 
-                // // 不写在setTime中，浏览器将直接卡死
-                // setTimeout(function() {
-                //     text = deflate(text);
-                //     console.log("code: " + encode64(text));
-                //     var img = document.createElement("img");
-                //     img.setAttribute("src", "https://www.plantuml.com/plantuml/img/" + encode64(text));
-                //     div.appendChild(img);
-                //     toolbar.appendChild(div);
-                // }, 1000);
+                $(tabs_wrapper).insertBefore($(toolbar));
+
+                tabs_with_code.appendChild(toolbar);
+
+                $("#"+"tabs-wrapper-"+i).tabs({
+                    border:false
+                });
+
+                var text = code.textContent;
+                var canvas = document.createElement("div");
+                canvas.setAttribute("id", "plantuml-canvas-" + i);
+                canvas.setAttribute("class", "plantuml-canvas");
+                text = unescape(encodeURIComponent(text));
 
                 var img = document.createElement("img");
                 img.setAttribute("id", "img-id-" + i);
                 img.setAttribute("class"," plantuml-img");
                 img.setAttribute("uml",text);
-                div.appendChild(img);
-                toolbar.appendChild(div);
+                canvas.appendChild(img);
+
+                tabs_with_img.appendChild(canvas);
 
             }
         }
         plantuml_runonce();
     });
-
-    // $(document).ready(function () {
-    //     plantuml_runonce();
-    // });
     </script>
 </div>
 
