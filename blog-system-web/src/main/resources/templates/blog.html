@@ -18,6 +18,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <!--<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>-->
 
+    <script th:if="${!languages.isEmpty()}" src="/js/tabs-switch-img-to-code.js"></script>
 
     <!-- https://bramp.github.io/js-sequence-diagrams/js/webfont.js -->
     <script th:if="${languages.contains('seq') || languages.contains('sequence')}" src="/js-sequence-diagrams/js/webfont.js"></script>
@@ -125,9 +126,10 @@
             if (code.getAttribute("class") == " language-seq"
                 || code.getAttribute("class") == " language-sequence"){
 
-                var div = document.createElement("div");
-                div.setAttribute("id","seq-diagram"+i);
-                toolbar.appendChild(div);
+                var canvas = document.createElement("div");
+                canvas.setAttribute("id","seq-diagram"+i);
+
+                addTabs(i,toolbar,canvas);
 
                 var text = code.textContent;
                 var d = Diagram.parse(text);
@@ -148,16 +150,18 @@
             var code = toolbar.querySelector("code");
             if (code.getAttribute("class") == " language-latex"){
                 var text = code.textContent;
-                var div = document.createElement("div");
-                div.setAttribute("id","latex-diagram"+i);
-                div.textContent = code.textContent;
-                toolbar.appendChild(div);
+                var canvas = document.createElement("div");
+                canvas.setAttribute("id","latex-diagram"+i);
+                canvas.textContent = code.textContent;
+                // toolbar.appendChild(div);
 
                 katex = window.katex;
 
-                katex.render(text,div,{
+                katex.render(text,canvas,{
                     throwOnError: false
                 });
+
+                addTabs(i,toolbar,canvas);
             }
         }
 
@@ -173,11 +177,11 @@
             var code = toolbar.querySelector("code");
             if (code.getAttribute("class") == " language-mermaid"){
                 var text = code.textContent;
-                var div = document.createElement("div");
-                div.setAttribute("id","mermaid-diagram"+i);
-                div.setAttribute("class","mermaid");
-                div.textContent = text;
-                toolbar.appendChild(div);
+                var canvas = document.createElement("div");
+                canvas.setAttribute("id","mermaid-diagram"+i);
+                canvas.setAttribute("class","mermaid");
+                canvas.textContent = text;
+                addTabs(i,toolbar,canvas);
             }
         }
 
@@ -193,12 +197,11 @@
                 var code = toolbar.querySelector("code");
                 if (code.getAttribute("class") == " language-flowchart"){
                     var text = code.textContent;
-                    var div = document.createElement("div");
-                    div.setAttribute("id","flowchart-canvas-"+i);
-                    div.setAttribute("class","flowchart");
-                    // div.textContent = text;
+                    var canvas = document.createElement("div");
+                    canvas.setAttribute("id","flowchart-canvas-"+i);
+                    canvas.setAttribute("class","flowchart");
 
-                    toolbar.appendChild(div);
+                    addTabs(i,toolbar,canvas);
 
                     var chart = flowchart.parse(text);
                     var options = {
@@ -240,6 +243,7 @@
                     };
                     chart.drawSVG("flowchart-canvas-"+i,options);
 
+
                 }
             }
 
@@ -256,37 +260,18 @@
             var toolbar = toolbars[i];
             var code = toolbar.querySelector("code");
             if (code.getAttribute("class") == " language-plantuml") {
-                var tabs_wrapper = document.createElement("div");
-                tabs_wrapper.setAttribute("id","tabs-wrapper-"+i);
-                var tabs_with_img = document.createElement("div");
-                tabs_with_img.setAttribute("title","展示图像");
-                var tabs_with_code = document.createElement("div");
-                tabs_with_code.setAttribute("title","展示代码");
-                tabs_wrapper.appendChild(tabs_with_img);
-                tabs_wrapper.appendChild(tabs_with_code);
-
-                $(tabs_wrapper).insertBefore($(toolbar));
-
-                tabs_with_code.appendChild(toolbar);
-
-                $("#"+"tabs-wrapper-"+i).tabs({
-                    border:false
-                });
-
                 var text = code.textContent;
                 var canvas = document.createElement("div");
                 canvas.setAttribute("id", "plantuml-canvas-" + i);
                 canvas.setAttribute("class", "plantuml-canvas");
                 text = unescape(encodeURIComponent(text));
-
                 var img = document.createElement("img");
                 img.setAttribute("id", "img-id-" + i);
                 img.setAttribute("class"," plantuml-img");
                 img.setAttribute("uml",text);
                 canvas.appendChild(img);
 
-                tabs_with_img.appendChild(canvas);
-
+                addTabs(i,toolbar,canvas);
             }
         }
         plantuml_runonce();
