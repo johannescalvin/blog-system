@@ -96,6 +96,7 @@ Bob->L: Log transaction
 
 ![plantuml-sequence.png](images/plantuml-sequence.png)
 
+
 ## 插入甘特图
 
 ### 使用Mermaid
@@ -172,9 +173,40 @@ graph TB
 
 ![mermaid-flowchart.png](images/mermaid-flowchart.png)
 
+## 插入活动图
+
+`PlantUML`的活动图，个人感觉，在某些场景下，要比流程图更具表现力。具体语法参见[文档](http://plantuml.com/zh/activity-diagram-beta)
+
+示例: 在markdown文件中插入下面的片段
+
+<pre>
+```plantuml
+@startuml
+start
+if (condition A) then (yes)
+  :Text 1;
+elseif (condition B) then (yes)
+  :Text 2;
+  stop
+elseif (condition C) then (yes)
+  :Text 3;
+elseif (condition D) then (yes)
+  :Text 4;
+else (nothing)
+  :Text else;
+endif
+stop
+@enduml
+```
+</pre>
+
+将自动识别并渲染为
+
+![plantuml-activity-diagram.png](images/plantuml-activity-diagram.png)
+
 ## 插入UML类图
 
-### 使用类图
+### 使用Mermaid
 
 系统使用mermaid自动检测并渲染UML类图，在markdown文件中插入符合[语法](https://mermaidjs.github.io/#/classDiagram)的片段
 
@@ -352,3 +384,82 @@ pie
 
 ![mindmap.png](images/plantuml-mindmap.png)
 
+## 插入定时图
+
+系统基于`PlantUML`实现了定时图功能，语法参见[文档](http://plantuml.com/zh/timing-diagram)。
+
+示例，在markdown文件中插入下面的代码
+
+<pre>
+```plantuml
+@startuml
+robust "Web Browser" as WB
+concise "Web User" as WU
+
+WB is Initializing
+WU is Absent
+
+@WB
+0 is idle
++200 is Processing
++100 is Waiting
+WB@0 <-> @50 : {50 ms lag}
+
+@WU
+0 is Waiting
++500 is ok
+@200 <-> @+150 : {150 ms}
+@enduml
+```
+</pre>
+
+将被自动识别并渲染为
+
+![plantuml-timing-diagram.png](images/plantuml-timing-diagram.png)
+
+## 插入组件图
+
+基于`PlantUML`提供了组件图功能，具体语法参见[文档](http://plantuml.com/zh/component-diagram)。
+
+示例: 在markdown文件中插入下面的代码片段
+
+<pre>
+```plantuml
+@startuml
+
+package "Some Group" {
+  HTTP - [First Component]
+  [Another Component]
+}
+ 
+node "Other Groups" {
+  FTP - [Second Component]
+  [First Component] --> FTP
+} 
+
+cloud {
+  [Example 1]
+}
+
+
+database "MySql" {
+  folder "This is my folder" {
+	[Folder 3]
+  }
+  frame "Foo" {
+	[Frame 4]
+  }
+}
+
+
+[Another Component] --> [Example 1]
+[Example 1] --> [Folder 3]
+[Folder 3] --> [Frame 4]
+
+@enduml
+```
+</pre>
+
+将自动识别被渲染为
+
+![plantuml-component.png](images/plantuml-component-diagram.png)
